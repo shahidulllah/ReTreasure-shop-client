@@ -4,6 +4,9 @@ import "./globals.css";
 import { Toaster } from "sonner";
 import Navbar from "@/components/pages/home/Navbar";
 import Footer from "@/components/pages/home/Footer";
+import AuthProvider from "@/providers/AuthProvider";
+import StoreProvider from "@/providers/StoreProvider";
+import ThemeProvider from "@/providers/ThemeProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -30,11 +33,17 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <div className="flex flex-col min-h-screen">
-          <Navbar />
-          <main className="flex-grow">{children}</main>
-          <Footer />
-        </div>
+        <AuthProvider>
+          <StoreProvider>
+            <ThemeProvider>
+              <div className="flex flex-col min-h-screen">
+                <Navbar />
+                <main className="flex-grow">{children}</main>
+                <Footer />
+              </div>
+            </ThemeProvider>
+          </StoreProvider>
+        </AuthProvider>
         <Toaster position="top-center" richColors />
       </body>
     </html>

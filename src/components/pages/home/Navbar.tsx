@@ -8,9 +8,10 @@ export default function Navbar() {
   const { data: session } = useSession();
 
   return (
-    <nav className="bg-white shadow-md py-3 px-6 flex justify-between items-center">
+    <nav className="bg-white shadow-md sticky top-0 z-30">
+      <div className="max-w-7xl mx-auto px-4 flex justify-between items-center py-3">
       <Link href="/" className="text-xl font-bold">
-        SecondHand 🛒
+         🛒 ReTreasure
       </Link>
       <div>
         {session ? (
@@ -24,14 +25,15 @@ export default function Navbar() {
           </>
         ) : (
           <>
-            <Link href="/login" className="mr-4">
+            <Link href="/auth/login" className="mr-4">
               Login
             </Link>
-            <Link href="/register">
+            <Link href="/auth/register">
               <Button>Register</Button>
             </Link>
           </>
         )}
+      </div>
       </div>
     </nav>
   );

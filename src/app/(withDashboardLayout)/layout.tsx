@@ -19,7 +19,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
     <div className="flex min-h-screen">
       {/* Sidebar */}
       <aside
-        className={`bg-gray-900 text-white w-64 p-5 space-y-4 ${
+        className={`bg-gray-900 text-white w-72 p-5 space-y-4 ${
           isOpen ? "block" : "hidden"
         } md:block`}
       >

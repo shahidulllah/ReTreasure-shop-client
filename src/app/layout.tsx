@@ -2,8 +2,6 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "sonner";
-import Navbar from "@/components/pages/home/Navbar";
-import Footer from "@/components/pages/home/Footer";
 import AuthProvider from "@/providers/AuthProvider";
 import StoreProvider from "@/providers/StoreProvider";
 import ThemeProvider from "@/providers/ThemeProvider";
@@ -36,11 +34,7 @@ export default function RootLayout({
         <AuthProvider>
           <StoreProvider>
             <ThemeProvider>
-              <div className="flex flex-col min-h-screen">
-                <Navbar />
-                <main className="flex-grow">{children}</main>
-                <Footer />
-              </div>
+              <main className="flex-grow">{children}</main>
             </ThemeProvider>
           </StoreProvider>
         </AuthProvider>

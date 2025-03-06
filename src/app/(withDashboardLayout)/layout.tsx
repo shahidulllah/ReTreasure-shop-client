@@ -1,20 +1,15 @@
 "use client";
+
 import { useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Menu, ShoppingCart, User, LogOut } from "lucide-react";
-import { logoutUser } from "@/services/authServices";
+import { signOut } from "next-auth/react";
 
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
-  const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleSidebar = () => setIsOpen(!isOpen);
-  const handleLogout = () => {
-    logoutUser()
-    router.push("/auth/login");
-  };
 
   return (
     <div className="flex min-h-screen">
@@ -48,7 +43,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
           </div>
           <div>
             <Button
-              onClick={handleLogout}
+              onClick={()=>signOut()}
               className="w-full flex items-center gap-2 bg-red-500 hover:bg-red-700"
             >
               <LogOut size={20} /> Logout

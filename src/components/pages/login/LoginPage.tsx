@@ -17,6 +17,7 @@ export function LoginPage() {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
+  console.log(form);
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);

@@ -61,11 +61,19 @@ const Navbar = () => {
 
           {/* Login/Profile Section */}
           {!session ? (
-            <Link href="/auth/login">
-              <button className="bg-slate-700 text-white px-4 py-1 font-semibold rounded-lg">
-                Sign In
+            <>
+             <Link href="/auth/register">
+              <button className="bg-slate-800 text-white px-4 py-1 font-semibold rounded-xl">
+                Register
               </button>
             </Link>
+             <Link href="/auth/login">
+              <button className="bg-slate-700 text-white px-4 py-1 font-semibold rounded-xl">
+                Login
+              </button>
+            </Link>
+            </>
+           
           ) : (
             <div className="relative">
               <button

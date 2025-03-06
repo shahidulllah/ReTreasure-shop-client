@@ -16,8 +16,11 @@ export const registerUser = async (userData: {
 };
 
 // Login User
-export const loginUser = async (email: string, password: string) => {
-  const response = await axios.post(`${API_URL}/login`, { email, password });
+export const loginUser = async (userData: {
+  email: string;
+  password: string;
+}) => {
+  const response = await axios.post(`${API_URL}/login`, { userData });
   if (response.data.success) {
     Cookies.set("token", response.data.user.token, {
       expires: 7,
@@ -30,5 +33,5 @@ export const loginUser = async (email: string, password: string) => {
 
 // Logout User
 export const logoutUser = () => {
-  Cookies.remove("token"); 
+  Cookies.remove("token");
 };

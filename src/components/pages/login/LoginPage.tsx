@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { toast } from "sonner";
-import axios from "axios";
+import { loginUser } from "@/services/authServices";
 
 export function LoginPage() {
   const router = useRouter();
@@ -21,7 +21,7 @@ export function LoginPage() {
     e.preventDefault();
     setLoading(true);
     try {
-      await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/auth/login`, form);
+      await loginUser(form);
       toast.success("Logged in successfully!");
       router.push("/dashboard");
     } catch (error) {

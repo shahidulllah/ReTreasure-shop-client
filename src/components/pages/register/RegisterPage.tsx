@@ -6,11 +6,16 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { toast } from "sonner";
-import axios from "axios";
+import { registerUser } from "@/services/authServices";
 
 export function RegisterPage() {
   const router = useRouter();
-  const [form, setForm] = useState({ name: "", email: "", phone: "", password: "" });
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    password: "",
+  });
   const [loading, setLoading] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -22,9 +27,9 @@ export function RegisterPage() {
     e.preventDefault();
     setLoading(true);
     try {
-      await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/auth/register`, form);
+      await registerUser(form);
       toast.success("Account created successfully!");
-      router.push("/dashboard");
+      router.push("/auth/login");
     } catch (error) {
       console.log(error);
       toast.error("Something went wrong! Try again.");

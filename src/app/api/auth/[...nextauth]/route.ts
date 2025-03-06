@@ -13,7 +13,7 @@ export const authOptions: NextAuthOptions = {
       async authorize(credentials) {
         try {
           const res = await axios.post(
-            `${process.env.NEXT_PUBLIC_API_URL}/api/auth/login`,
+            `${process.env.NEXT_PUBLIC_BASE_URL}/api/auth/login`,
             credentials
           );
           const user = res.data.user;
@@ -22,6 +22,7 @@ export const authOptions: NextAuthOptions = {
             return {
               id: user._id,
               name: user.name,
+              image: user.image,
               email: user.email,
               token: user.token, 
             };

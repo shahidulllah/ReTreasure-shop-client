@@ -1,37 +1,37 @@
-"use client";
-import { createContext, useState, useEffect, ReactNode } from "react";
-import Cookies from "js-cookie";
-import { User } from "@/types";
+// "use client";
+// import { createContext, useState, useEffect, ReactNode } from "react";
+// import Cookies from "js-cookie";
+// import { User } from "@/types";
 
-interface AuthContextType {
-  user: User | null;
-  setUser: (user: User | null) => void;
-  logout: () => void;
-}
+// interface AuthContextType {
+//   user: User | null;
+//   setUser: (user: User | null) => void;
+//   logout: () => void;
+// }
 
-export const AuthContext = createContext<AuthContextType | null>(null);
+// export const AuthContext = createContext<AuthContextType | null>(null);
 
-export const AuthenticationProvider = ({ children }: { children: ReactNode }) => {
-  const [user, setUser] = useState<User | null>(null);
+// export const AuthenticationProvider = ({ children }: { children: ReactNode }) => {
+//   const [user, setUser] = useState<User | null>(null);
 
-  useEffect(() => {
-    const token = Cookies.get("token");
-    const storedUser = Cookies.get("user");
+//   useEffect(() => {
+//     const token = Cookies.get("token");
+//     const storedUser = Cookies.get("user");
 
-    if (token && storedUser) {
-      setUser(JSON.parse(storedUser));
-    }
-  }, []);
+//     if (token && storedUser) {
+//       setUser(JSON.parse(storedUser));
+//     }
+//   }, []);
 
-  const logout = () => {
-    Cookies.remove("token");
-    Cookies.remove("user");
-    setUser(null);
-  };
+//   const logout = () => {
+//     Cookies.remove("token");
+//     Cookies.remove("user");
+//     setUser(null);
+//   };
 
-  return (
-    <AuthContext.Provider value={{ user, setUser, logout }}>
-      {children}
-    </AuthContext.Provider>
-  );
-};
+//   return (
+//     <AuthContext.Provider value={{ user, setUser, logout }}>
+//       {children}
+//     </AuthContext.Provider>
+//   );
+// };

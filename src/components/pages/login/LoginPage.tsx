@@ -2,11 +2,11 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { signIn } from "next-auth/react"; 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { toast } from "sonner";
-import { loginUser } from "@/services/authServices";
 
 export function LoginPage() {
   const router = useRouter();
@@ -17,14 +17,23 @@ export function LoginPage() {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  console.log(form);
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
+
     try {
-      await loginUser(form.email, form.password);
-      toast.success("Logged in successfully!");
-      router.push("/dashboard");
+      const res = await signIn("credentials", {
+        email: form.email,
+        password: form.password,
+        redirect: false, 
+      });
+
+      if (res?.error) {
+        toast.error("Invalid email or password!");
+      } else {
+        toast.success("Logged in successfully!");
+        router.push("/"); 
+      }
     } catch (error) {
       console.log(error);
       toast.error("Something went wrong! Try again.");

@@ -1,22 +1,19 @@
 "use client";
-import { useContext, useState } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Menu, ShoppingCart, User, LogOut } from "lucide-react";
-import { AuthContext } from "@/context/AuthContext";
 import { logoutUser } from "@/services/authServices";
 
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
-  const auth = useContext(AuthContext);
-  console.log("Auth user:", auth?.user);
 
   const toggleSidebar = () => setIsOpen(!isOpen);
   const handleLogout = () => {
     logoutUser()
-    router.push("/");
+    router.push("/auth/login");
   };
 
   return (

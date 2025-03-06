@@ -12,16 +12,12 @@ export const registerUser = async (userData: {
   password: string;
 }) => {
   const response = await axios.post(`${API_URL}/register`, userData);
-  console.log(response.data);
   return response.data;
 };
 
 // Login User
-export const loginUser = async (userData: {
-  email: string;
-  password: string;
-}) => {
-  const response = await axios.post(`${API_URL}/login`, { userData });
+export const loginUser = async (email: string, password: string) => {
+  const response = await axios.post(`${API_URL}/login`, { email, password });
   if (response.data.success) {
     Cookies.set("token", response.data.user.token, {
       expires: 7,

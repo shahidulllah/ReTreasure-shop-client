@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Menu, ShoppingCart, User, LogOut } from "lucide-react";
+import { logoutUser } from "@/services/authServices";
 
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   const router = useRouter();
@@ -11,8 +12,8 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
 
   const toggleSidebar = () => setIsOpen(!isOpen);
   const handleLogout = () => {
-    // Perform logout logic here
-    router.push("/login");
+    logoutUser()
+    router.push("/auth/login");
   };
 
   return (

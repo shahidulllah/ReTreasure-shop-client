@@ -22,7 +22,7 @@ export function LoginPage() {
     e.preventDefault();
     setLoading(true);
     try {
-      await loginUser(form);
+      await loginUser(form.email, form.password);
       toast.success("Logged in successfully!");
       router.push("/dashboard");
     } catch (error) {

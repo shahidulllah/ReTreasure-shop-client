@@ -1,4 +1,3 @@
-// services/authService.ts
 import axios from "axios";
 import Cookies from "js-cookie";
 
@@ -18,8 +17,15 @@ export const registerUser = async (userData: {
 // Login User
 export const loginUser = async (email: string, password: string) => {
   const response = await axios.post(`${API_URL}/login`, { email, password });
+  
   if (response.data.success) {
-    Cookies.set("token", response.data.user.token, {
+    const userData = response.data.user;
+    Cookies.set("token", userData.token, {
+      expires: 7,
+      secure: true,
+      sameSite: "strict",
+    });
+    Cookies.set("user", JSON.stringify(userData), {
       expires: 7,
       secure: true,
       sameSite: "strict",
@@ -31,4 +37,5 @@ export const loginUser = async (email: string, password: string) => {
 // Logout User
 export const logoutUser = () => {
   Cookies.remove("token");
+  Cookies.remove("user");
 };

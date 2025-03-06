@@ -5,6 +5,7 @@ import { Toaster } from "sonner";
 import AuthProvider from "@/providers/AuthProvider";
 import StoreProvider from "@/providers/StoreProvider";
 import ThemeProvider from "@/providers/ThemeProvider";
+import { AuthenticationProvider } from "@/context/AuthContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -31,13 +32,15 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <AuthProvider>
-          <StoreProvider>
-            <ThemeProvider>
-              <main className="flex-grow">{children}</main>
-            </ThemeProvider>
-          </StoreProvider>
-        </AuthProvider>
+        <AuthenticationProvider>
+          <AuthProvider>
+            <StoreProvider>
+              <ThemeProvider>
+                <main className="flex-grow">{children}</main>
+              </ThemeProvider>
+            </StoreProvider>
+          </AuthProvider>
+        </AuthenticationProvider>
         <Toaster position="top-center" richColors />
       </body>
     </html>

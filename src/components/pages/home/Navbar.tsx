@@ -1,11 +1,12 @@
 "use client";
 import Link from "next/link";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Menu, X, Sun, Moon, LogOut } from "lucide-react";
 import Image from "next/image";
 import { useTheme } from "next-themes";
 import { usePathname } from "next/navigation";
-import { useSession, signOut } from "next-auth/react";
+import { AuthContext } from "@/context/AuthContext";
+import { logoutUser } from "@/services/authServices";
 
 const navLinks = [
   { title: "Home", path: "/" },
@@ -18,8 +19,10 @@ const Navbar = () => {
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
   const pathname = usePathname();
-  const { data: session } = useSession();
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const auth = useContext(AuthContext);
+  const session = auth;
+  console.log(session?.user);
 
   useEffect(() => {
     setMounted(true);
@@ -81,7 +84,7 @@ const Navbar = () => {
                 className="flex items-center space-x-2"
               >
                 <Image
-                  src={session.user?.image || "/default-avatar.png"}
+                  src={session?.user?.image || "/default-avatar.png"}
                   alt="User"
                   width={35}
                   height={35}
@@ -108,7 +111,7 @@ const Navbar = () => {
                     Dashboard
                   </Link>
                   <button
-                    onClick={() => signOut()}
+                    onClick={() => logoutUser()}
                     className="block w-full text-left px-4 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800"
                   >
                     <LogOut className="inline-block w-5 h-5 mr-2" /> Logout

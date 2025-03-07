@@ -17,7 +17,10 @@ export const getListings = async (params: any) => {
 export const createListing = async (data: any, token: string) => {
   try {
     const response = await axios.post(`${API_URL}/api/listings`, data, {
-      headers: { Authorization: `Bearer ${token}` },
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
     });
     return response.data;
   } catch (error) {
@@ -28,8 +31,11 @@ export const createListing = async (data: any, token: string) => {
 // Update Listing
 export const updateListing = async (id: string, data: any, token: string) => {
   try {
-    const response = await axios.patch(`${API_URL}/api/listings/${id}`, data, {
-      headers: { Authorization: `Bearer ${token}` },
+    const response = await axios.put(`${API_URL}/api/listings/${id}`, data, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
     });
     return response.data;
   } catch (error) {
@@ -41,7 +47,10 @@ export const updateListing = async (id: string, data: any, token: string) => {
 export const deleteListing = async (id: string, token: string) => {
   try {
     await axios.delete(`${API_URL}/api/listings/${id}`, {
-      headers: { Authorization: `Bearer ${token}` },
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
     });
   } catch (error) {
     throw error;

@@ -1,19 +1,34 @@
 export interface IListing {
   _id: string;
-  name: string;
+  title: string;
   description: string;
   price: number;
-  condition: "new" | "used";
-  category:
-    | "Electronics"
-    | "Fashion"
-    | "Home & Furniture"
-    | "Books & Media"
-    | "Device"
-    | "Accessories";
-  images: string[];
-  inStock: boolean;
+  condition: string;
+  category: string;
+  image: string;
   quantity: number;
   userId: string | undefined;
   status: "available" | "sold";
+}
+
+export interface FetchListingsParams {
+  skip?: number;
+  limit?: number;
+  filterOptions?: string;
+}
+
+export interface AddListingArgs {
+  data: Partial<IListing>;
+  token: string;
+}
+
+export interface EditListingArgs {
+  id: string;
+  data: Partial<IListing>;
+  token: string;
+}
+
+export interface RemoveListingArgs {
+  id: string;
+  token: string;
 }

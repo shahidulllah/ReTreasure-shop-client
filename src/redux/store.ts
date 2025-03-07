@@ -1,8 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
+import listingReducer from "../redux/features/listingSlice";
 
 export const makeStore = () => {
   return configureStore({
-    reducer: {},
+    reducer: {
+      listings: listingReducer,
+    },
   });
 };
 

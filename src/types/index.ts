@@ -1,9 +1,19 @@
-//user type
-export interface User {
+export interface IListing {
   _id: string;
   name: string;
-  email: string;
-  phone: string;
-  image: string
-  token: string;
+  description: string;
+  price: number;
+  condition: "new" | "used";
+  category:
+    | "Electronics"
+    | "Fashion"
+    | "Home & Furniture"
+    | "Books & Media"
+    | "Device"
+    | "Accessories";
+  images: string[];
+  inStock: boolean;
+  quantity: number;
+  userId: string | undefined;
+  status: "available" | "sold";
 }

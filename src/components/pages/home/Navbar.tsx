@@ -81,7 +81,7 @@ const Navbar = () => {
                 className="flex items-center space-x-2"
               >
                 <Image
-                  src={session.user?.image || "https://ibb.co.com/KWD7nJQ"}
+                  src={session.user?.image || "https://ibb.co/KWD7nJQ"}
                   alt="User"
                   width={35}
                   height={35}

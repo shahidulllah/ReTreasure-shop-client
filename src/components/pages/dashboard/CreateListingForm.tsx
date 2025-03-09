@@ -10,7 +10,7 @@ import { toast } from "sonner";
 import { useSession } from "next-auth/react";
 import { createListing } from "@/services/listingService";
 
-export default function ListingPage() {
+export default function CreateLisngForm() {
   const router = useRouter();
   const { data: session } = useSession();
   const token = session?.user?.token;

@@ -1,25 +1,24 @@
 "use client";
 import Link from "next/link";
 import React, { useState, useEffect } from "react";
-import { Menu, X, Sun, Moon, LogOut } from "lucide-react";
-import Image from "next/image";
+import {
+  Menu,
+  X,
+  Sun,
+  Moon,
+  Search,
+  MapPin,
+  PlusCircle,
+  MessageCircleMore,
+} from "lucide-react";
 import { useTheme } from "next-themes";
-import { usePathname } from "next/navigation";
-import { useSession, signOut } from "next-auth/react";
-
-const navLinks = [
-  { title: "Home", path: "/" },
-  { title: "Listings", path: "/listings" },
-  { title: "Dashboard", path: "/dashboard" },
-];
+import { Button } from "@/components/ui/button";
+import Profile from "@/components/shared/Profile";
 
 const Navbar = () => {
   const [navbarOpen, setNavbarOpen] = useState(false);
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
-  const pathname = usePathname();
-  const { data: session } = useSession();
-  const [dropdownOpen, setDropdownOpen] = useState(false);
 
   useEffect(() => {
     setMounted(true);
@@ -32,138 +31,98 @@ const Navbar = () => {
         <Link href="/">
           <h1 className="font-semibold text-2xl"> 🛒 ReTreasure</h1>
         </Link>
+        <div className="hidden lg:flex items-center bg-white text-black rounded-md p-1 border">
+          <Search className="h-5 w-5 text-gray-500 mx-2" />
+          <input
+            className="border-none outline-none focus:-none w-40"
+            placeholder="Search"
+          />
+          <MapPin className="h-5 w-5 text-gray-500 mx-2" />
+          <input
+            className="border-none outline-none w-32"
+            placeholder="Location"
+          />
+          <Button className="bg-green-600 text-white px-4 rounded-md">
+            Search
+          </Button>
+        </div>
 
         {/* Desktop Navigation */}
-        <div className="hidden md:flex items-center space-x-8">
-          {navLinks.map((link) => (
-            <Link
-              key={link.path}
-              href={link.path}
-              className={`relative px-1 py-1 text-black dark:text-white transition duration-300 hover:text-gray-700 dark:hover:text-gray-300 ${
-                pathname === link.path ? "border-b-2 border-blue-500" : ""
-              }`}
-            >
-              {link.title}
-            </Link>
-          ))}
-
+        <div className="hidden md:flex items-center space-x-6">
           {/* Theme Toggle Button */}
           <button
             onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
             className="hidden lg:flex"
           >
             {mounted && theme === "dark" ? (
-              <Sun className="h-6 w-6 text-yellow-500" />
+              <Sun className="h-5 w-5 text-yellow-500" />
             ) : (
-              <Moon className="h-6 w-6 text-gray-700" />
+              <Moon className="h-5 w-5 text-gray-700" />
             )}
           </button>
+          <MessageCircleMore className="h-6 w-6" />
 
-          {/* Login/Profile Section */}
-          {!session?.user ? (
-            <>
-             <Link href="/auth/register">
-              <button className="bg-slate-800 text-white px-4 py-1 font-semibold rounded-xl">
-                Register
-              </button>
-            </Link>
-             <Link href="/auth/login">
-              <button className="bg-slate-700 text-white px-4 py-1 font-semibold rounded-xl">
-                Login
-              </button>
-            </Link>
-            </>
-           
-          ) : (
-            <div className="relative">
-              <button
-                onClick={() => setDropdownOpen(!dropdownOpen)}
-                className="flex items-center space-x-2"
-              >
-                <Image
-                  src={session.user?.image || "https://ibb.co/KWD7nJQ"}
-                  alt="User"
-                  width={35}
-                  height={35}
-                  className="rounded-full border border-gray-400"
-                  priority
-                />
-              </button>
+          <Profile />
 
-              {/* Dropdown Menu */}
-              {dropdownOpen && (
-                <div className="absolute right-0 mt-2 w-64 bg-white dark:bg-gray-900 shadow-md rounded-lg py-3 px-4 z-50 transition-all duration-300">
-                  <div className="mb-4">
-                    <h4 className="text-lg font-semibold text-center text-black dark:text-white">
-                      {session.user?.name || "User Name"}
-                    </h4>
-                    <p className="text-sm text-gray-500 text-center">
-                      {session.user?.email || "user@example.com"}
-                    </p>
-                  </div>
-                  <Link
-                    href="/dashboard"
-                    className="block px-4 py-2 text-black dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800 hover:rounded-md border-b-2"
-                  >
-                    Dashboard
-                  </Link>
-                  <button
-                    onClick={() => signOut()}
-                    className="block w-full text-left px-4 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800"
-                  >
-                    <LogOut className="inline-block w-5 h-5 mr-2" /> Logout
-                  </button>
-                </div>
-              )}
-            </div>
-          )}
+          <Button className="flex items-center bg-white border text-green-600 px-3 py-1 rounded-md">
+            <PlusCircle className="h-5 w-5 mr-1" /> Post Listing
+          </Button>
         </div>
 
         {/* Mobile Menu Button */}
+
+        {/* Top navbar*/}
         <div className="md:hidden flex items-center space-x-4">
           <button
             onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
             className="lg:hidden"
           >
             {mounted && theme === "dark" ? (
-              <Sun className="h-6 w-6 text-yellow-500" />
+              <Sun className="h-5 w-5 text-yellow-500" />
             ) : (
-              <Moon className="h-6 w-6 text-gray-700" />
+              <Moon className="h-5 w-5 text-gray-700" />
             )}
           </button>
 
           <button
             onClick={() => setNavbarOpen(!navbarOpen)}
-            className="p-2 rounded-md text-black dark:text-white border border-gray-400"
+            className="p-2 rounded-md text-black dark:text-white"
           >
             {navbarOpen ? (
-              <X className="h-6 w-6" />
+              <X className="h-5 w-5 cursor-pointer" />
             ) : (
-              <Menu className="h-6 w-6" />
+              <Menu className="h-5 w-5 cursor-pointer" />
             )}
           </button>
         </div>
       </div>
 
+      {/* Bottom navbar*/}
+      <div className="md:hidden flex bg-slate-200 items-center px-6 py-2 justify-between space-x-4">
+        <Search className="h-5 w-5 text-gray-500 ml-2" />
+
+        <div className="flex gap-2 items-center">
+          <MessageCircleMore className="h-5 w-5" />
+          <Profile />
+
+          <Button className="flex items-center bg-white border text-green-600 px-3 py-1 rounded-md">
+            <PlusCircle className="h-5 w-5 mr-1" /> Post Listing
+          </Button>
+        </div>
+      </div>
+
       {/* Mobile Navigation Overlay */}
       {navbarOpen && (
-        <div className="absolute top-[57px] left-0 w-full bg-white dark:bg-black border-t border-gray-300 dark:border-gray-600 shadow-md md:hidden text-center">
-          <ul className="flex flex-col space-y-4 p-6">
-            {navLinks.map((link) => (
-              <li key={link.path}>
-                <Link
-                  href={link.path}
-                  className={`px-3 py-1 justify-center text-gray-700 dark:text-gray-300 text-lg transition duration-300 hover:text-black dark:hover:text-white ${
-                    pathname === link.path
-                      ? "border-b-2 border-blue-500 text-blue-500"
-                      : ""
-                  }`}
-                >
-                  {link.title}
-                </Link>
-              </li>
-            ))}
-          </ul>
+        <div className="absolute left-0 w-full top-12 bg-white dark:bg-black border-t border-gray-300 dark:border-gray-600 shadow-md md:hidden text-center">
+          <div>
+            <ul>
+              <li>cetegory</li>
+              <li>cetegory</li>
+              <li>cetegory</li>
+              <li>cetegory</li>
+              <li>cetegory</li>
+            </ul>
+          </div>
         </div>
       )}
     </nav>

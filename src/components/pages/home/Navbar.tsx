@@ -26,7 +26,7 @@ const Navbar = () => {
 
   return (
     <nav className="sticky top-0 left-0 right-0 z-20 bg-white shadow-md dark:bg-black border-b border-gray-300 dark:border-gray-600 py-3">
-      <div className="flex items-center justify-between lg:max-w-7xl mx-auto px-6">
+      <div className="flex items-center justify-between lg:max-w-7xl mx-auto px-4">
         {/* Logo */}
         <Link href="/">
           <h1 className="font-semibold text-2xl"> 🛒 ReTreasure</h1>
@@ -48,7 +48,7 @@ const Navbar = () => {
         </div>
 
         {/* Desktop Navigation */}
-        <div className="hidden md:flex items-center space-x-6">
+        <div className="hidden md:flex items-center space-x-4">
           {/* Theme Toggle Button */}
           <button
             onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
@@ -98,7 +98,7 @@ const Navbar = () => {
       </div>
 
       {/* Bottom navbar*/}
-      <div className="md:hidden flex bg-slate-200 items-center px-6 py-2 justify-between space-x-4">
+      <div className="md:hidden flex bg-slate-200 items-center px-4 py-2 justify-between space-x-4">
         <Search className="h-5 w-5 text-gray-500 ml-2" />
 
         <div className="flex gap-2 items-center">

@@ -1,4 +1,5 @@
 "use client";
+import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
@@ -26,15 +27,15 @@ const Hero = () => {
           />
           <div className="absolute inset-0 flex items-center justify-center">
             <div className="text-center text-white px-4">
-              <h1 className="text-3xl md:text-5xl font-bold mb-4">
+              <h1 className="text-3xl lg:text-4xl font-bold mb-4">
                 Welcome to ReTreasure Heaven
               </h1>
               <p className="text-lg md:text-xl mb-6">
                 Discover the best stationery products for your needs.
               </p>
-              <button className="bg-green-600 text-white px-6 py-2 md:px-8 md:py-3 rounded-lg font-semibold hover:bg-green-700 transition-colors duration-300">
+              <Button className="bg-green-600 text-white px-6 rounded-lg font-semibold hover:bg-green-700 transition-colors duration-300">
                 Shop Now
-              </button>
+              </Button>
             </div>
           </div>
         </div>
@@ -50,15 +51,15 @@ const Hero = () => {
           />
           <div className="absolute inset-0 flex items-center justify-center">
             <div className="text-center text-white px-4">
-              <h1 className="text-3xl md:text-5xl font-bold mb-4">
+              <h1 className="text-3xl lg:text-4xl font-bold mb-4">
                 Exclusive Offers
               </h1>
               <p className="text-lg md:text-xl mb-6">
                 Get up to 50% off on selected items. Limited time only!
               </p>
-              <button className="bg-green-600 text-white px-6 py-2 md:px-8 md:py-3 rounded-lg font-semibold hover:bg-green-700 transition-colors duration-300">
+              <Button className="bg-green-600 text-white px-6 rounded-lg font-semibold hover:bg-green-700 transition-colors duration-300">
                 Explore Offers
-              </button>
+              </Button>
             </div>
           </div>
         </div>
@@ -74,15 +75,15 @@ const Hero = () => {
           />
           <div className="absolute inset-0 flex items-center justify-center">
             <div className="text-center text-white px-4">
-              <h1 className="text-3xl md:text-5xl font-bold mb-4">
+              <h1 className="text-3xl lg:text-4xl font-bold mb-4">
                 New Arrivals
               </h1>
               <p className="text-lg md:text-xl mb-6">
                 Check out our latest collection of stationery products.
               </p>
-              <button className="bg-green-600 text-white px-6 py-2 md:px-8 md:py-3 rounded-lg font-semibold hover:bg-green-700 transition-colors duration-300">
+              <Button className="bg-green-600 text-white px-6  rounded-md font-semibold hover:bg-green-700 transition-colors duration-300">
                 View Collection
-              </button>
+              </Button>
             </div>
           </div>
         </div>

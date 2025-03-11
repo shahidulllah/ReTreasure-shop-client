@@ -31,20 +31,22 @@ const TopCategories = () => {
   ];
 
   return (
-    <div className="p-6 bg-gray-50 rounded-lg my-10">
-      <h1 className="text-3xl font-bold mb-6 text-center">Top Category</h1>
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
-        {categories.map((category, index) => (
-          <div
-            key={index}
-            className="flex flex-col items-center justify-center p-4 bg-white border border-gray-200 rounded-lg hover:shadow-md transition-shadow cursor-pointer"
-          >
-            <div className="text-green-500">{category.icon}</div>
-            <span className="mt-2 text-sm font-medium text-gray-700 text-center">
-              {category.name}
-            </span>
-          </div>
-        ))}
+    <div className="bg-gray-50 dark:bg-gray-800 rounded-lg my-10">
+      <div className="py-10 lg:max-w-7xl mx-auto px-4">
+        <h1 className="text-3xl font-bold mb-6 text-center">Top Category</h1>
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
+          {categories.map((category, index) => (
+            <div
+              key={index}
+              className="flex flex-col items-center justify-center p-4 bg-white dark:bg-gray-700 border border-gray-400 rounded-lg hover:shadow-md transition-shadow cursor-pointer"
+            >
+              <div className="text-green-500">{category.icon}</div>
+              <span className="mt-2 text-sm font-medium text-gray-700 dark:text-gray-300 text-center">
+                {category.name}
+              </span>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );

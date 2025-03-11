@@ -29,20 +29,20 @@ const Navbar = () => {
       <div className="flex items-center justify-between lg:max-w-7xl mx-auto px-4">
         {/* Logo */}
         <Link href="/">
-          <h1 className="font-semibold text-2xl"> 🛒 ReTreasure</h1>
+          <h1 className="font-semibold text-3xl"> 🛒 ReTreasure</h1>
         </Link>
-        <div className="hidden lg:flex items-center bg-white text-black rounded-md p-1 border">
-          <Search className="h-5 w-5 text-gray-500 mx-2" />
+        <div className="hidden lg:flex items-center bg-white dark:bg-gray-700 text-black rounded-md p-1 border">
+          <Search className="h-5 w-5 text-gray-500 dark:text-gray-300 mx-2" />
           <input
-            className="border-none outline-none focus:-none w-40"
-            placeholder="Search"
+            className="border-none outline-none focus:-none w-40 dark:text-gray-200"
+            placeholder="Search "
           />
-          <MapPin className="h-5 w-5 text-gray-500 mx-2" />
+          <MapPin className="h-5 w-5 text-gray-500 mx-2 dark:text-gray-300" />
           <input
-            className="border-none outline-none w-32"
+            className="border-none outline-none w-32 dark:text-gray-200"
             placeholder="Location"
           />
-          <Button className="bg-green-600 text-white px-4 rounded-md">
+          <Button className="bg-green-500 text-white px-4 rounded-md">
             Search
           </Button>
         </div>

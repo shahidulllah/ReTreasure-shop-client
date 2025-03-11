@@ -33,7 +33,7 @@ const Hero = () => {
               <p className="text-lg md:text-xl mb-6">
                 Discover the best stationery products for your needs.
               </p>
-              <Button className="bg-green-500 text-white px-6 rounded-lg font-semibold hover:bg-green-600 transition-colors duration-300">
+              <Button className="bg-purple-700 text-white px-6 rounded-lg font-semibold hover:bg-purple-700 transition-colors duration-300">
                 Shop Now
               </Button>
             </div>
@@ -57,7 +57,7 @@ const Hero = () => {
               <p className="text-lg md:text-xl mb-6">
                 Get up to 50% off on selected items. Limited time only!
               </p>
-              <Button className="bg-green-500 text-white px-6 rounded-lg font-semibold hover:bg-green-600 transition-colors duration-300">
+              <Button className="bg-purple-700 text-white px-6 rounded-lg font-semibold hover:bg-purple-700 transition-colors duration-300">
                 Explore Offers
               </Button>
             </div>
@@ -81,7 +81,7 @@ const Hero = () => {
               <p className="text-lg md:text-xl mb-6">
                 Check out our latest collection of stationery products.
               </p>
-              <Button className="bg-green-500 text-white px-6  rounded-md font-semibold hover:bg-green-600 transition-colors duration-300">
+              <Button className="bg-purple-700 text-white px-6  rounded-md font-semibold hover:bg-purple-700 transition-colors duration-300">
                 View Collection
               </Button>
             </div>

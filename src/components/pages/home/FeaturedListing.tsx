@@ -5,7 +5,7 @@ import { CardContent } from "@/components/ui/card";
 const featuredListings = [
   {
     id: 1,
-    image: "https://i.ibb.co.com/TkF4w7g/banner-book.png", 
+    image: "https://i.ibb.co.com/TkF4w7g/banner-book.png",
     price: "47250 ৳",
     title: "New Blood Circulative Massager",
     location: "Bangladesh",
@@ -63,7 +63,7 @@ export default function FeaturedListings() {
               </div>
               <div className="flex justify-between">
                 <p className="text-xs text-gray-500 mt-2">{listing.time}</p>
-                <div className="flex items-center text-green-600 text-xs font-bold mt-2">
+                <div className="flex items-center text-purple-700 text-xs font-bold mt-2">
                   <ArrowUp className="w-4 h-4 mr-1" />
                   FEATURED
                 </div>

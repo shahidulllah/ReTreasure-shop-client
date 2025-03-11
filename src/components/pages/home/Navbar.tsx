@@ -14,6 +14,7 @@ import {
 import { useTheme } from "next-themes";
 import { Button } from "@/components/ui/button";
 import Profile from "@/components/shared/Profile";
+import { categories } from "./CategoryNav";
 
 const Navbar = () => {
   const [navbarOpen, setNavbarOpen] = useState(false);
@@ -42,7 +43,7 @@ const Navbar = () => {
             className="border-none outline-none w-32 dark:text-gray-200"
             placeholder="Location"
           />
-          <Button className="bg-green-500 text-white px-4 rounded-md">
+          <Button className="bg-purple-700 text-white px-4 rounded-md">
             Search
           </Button>
         </div>
@@ -64,7 +65,7 @@ const Navbar = () => {
 
           <Profile />
 
-          <Button className="flex items-center bg-white border text-green-600 px-3 py-1 rounded-md">
+          <Button className="flex items-center bg-white border text-purple-700 px-3 py-1 rounded-md">
             <PlusCircle className="h-5 w-5 mr-1" /> Post Listing
           </Button>
         </div>
@@ -105,7 +106,7 @@ const Navbar = () => {
           <MessageCircleMore className="h-5 w-5" />
           <Profile />
 
-          <Button className="flex items-center bg-white border text-green-600 px-3 py-1 rounded-md">
+          <Button className="flex items-center bg-white border text-purple-700 px-3 py-1 rounded-md">
             <PlusCircle className="h-5 w-5 mr-1" /> Post Listing
           </Button>
         </div>
@@ -113,16 +114,12 @@ const Navbar = () => {
 
       {/* Mobile Navigation Overlay */}
       {navbarOpen && (
-        <div className="absolute left-0 w-full top-12 bg-white dark:bg-black border-t border-gray-300 dark:border-gray-600 shadow-md md:hidden text-center">
-          <div>
-            <ul>
-              <li>cetegory</li>
-              <li>cetegory</li>
-              <li>cetegory</li>
-              <li>cetegory</li>
-              <li>cetegory</li>
-            </ul>
-          </div>
+        <div className="absolute left-0 mt-2 w-full bg-purple-200 text-black shadow-md rounded-md p-3">
+          {categories.map((category, index) => (
+            <p key={index} className="p-2 hover:bg-gray-100 cursor-pointer">
+              {category}
+            </p>
+          ))}
         </div>
       )}
     </nav>

@@ -40,7 +40,7 @@ const TopCategories = () => {
               key={index}
               className="flex flex-col items-center justify-center p-4 bg-white dark:bg-gray-700 border border-gray-400 rounded-lg hover:shadow-md transition-shadow cursor-pointer"
             >
-              <div className="text-green-500">{category.icon}</div>
+              <div className="text-purple-700">{category.icon}</div>
               <span className="mt-2 text-sm font-medium text-gray-700 dark:text-gray-300 text-center">
                 {category.name}
               </span>

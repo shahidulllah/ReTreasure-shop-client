@@ -43,25 +43,25 @@ const LatestListings = () => {
   ];
 
   return (
-    <div className="p-6 bg-gray-50 rounded-lg">
-      <h1 className="text-2xl font-bold mb-6 text-center">Latest Listings</h1>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+    <div className="px-4 rounded-lg lg:max-w-7xl mx-auto my-20">
+      <h1 className="text-3xl font-bold mb-6 text-center">Latest Listings</h1>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
         {listings.map((listing) => (
           <div
             key={listing.id}
-            className="bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg transition-shadow"
+            className=" border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg transition-shadow space-y-3"
           >
             <div className="w-full h-48 relative">
               <Image
                 src={listing.image}
                 alt={listing.title}
                 layout="fill"
-                className="object-cover"
+                priority
               />
             </div>
             <div className="p-4">
               <p className="text-red-600 font-bold text-lg">{listing.price}</p>
-              <h2 className="text-lg font-semibold text-gray-900 truncate">
+              <h2 className="text-lg font-semibold truncate">
                 {listing.title}
               </h2>
               <div className="flex items-center text-sm text-gray-500 mt-2">

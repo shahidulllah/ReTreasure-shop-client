@@ -23,7 +23,7 @@ const Hero = () => {
             height={400}
             width={900}
             alt="Special Offer 1"
-            className="w-full h-full object-cover bg-black opacity-30"
+            className="w-full h-full object-cover bg-black opacity-50"
           />
           <div className="absolute inset-0 flex items-center justify-center">
             <div className="text-center text-white px-4">
@@ -47,7 +47,7 @@ const Hero = () => {
             height={400}
             width={900}
             alt="Special Offer 2"
-            className="w-full h-full object-cover bg-black opacity-30"
+            className="w-full h-full object-cover bg-black opacity-50"
           />
           <div className="absolute inset-0 flex items-center justify-center">
             <div className="text-center text-white px-4">
@@ -71,7 +71,7 @@ const Hero = () => {
             height={400}
             width={900}
             alt="New Arrivals"
-            className="w-full h-full object-cover bg-black opacity-30 "
+            className="w-full h-full object-cover bg-black opacity-50 "
           />
           <div className="absolute inset-0 flex items-center justify-center">
             <div className="text-center text-white px-4">

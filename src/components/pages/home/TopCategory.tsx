@@ -31,7 +31,7 @@ const TopCategories = () => {
   ];
 
   return (
-    <div className="bg-gray-50 dark:bg-gray-800 rounded-lg my-10">
+    <div className="bg-gray-50 dark:bg-slate-900 rounded-lg my-10">
       <div className="py-10 lg:max-w-7xl mx-auto px-4">
         <h1 className="text-3xl font-bold mb-6 text-center">Top Category</h1>
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">

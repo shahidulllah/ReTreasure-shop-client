@@ -7,7 +7,6 @@ import {
   Sun,
   Moon,
   Search,
-  MapPin,
   PlusCircle,
   MessageCircleMore,
 } from "lucide-react";
@@ -15,9 +14,11 @@ import { useTheme } from "next-themes";
 import { Button } from "@/components/ui/button";
 import Profile from "@/components/shared/Profile";
 import { categories } from "./CategoryNav";
+import SearchField from "@/components/shared/SearchField";
 
 const Navbar = () => {
   const [navbarOpen, setNavbarOpen] = useState(false);
+  const [searchFieldOpen, setSearchFieldrOpen] = useState(false);
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
@@ -26,30 +27,18 @@ const Navbar = () => {
   }, []);
 
   return (
-    <nav className="sticky top-0 left-0 right-0 z-20 bg-white shadow-md dark:bg-black border-b border-gray-300 dark:border-gray-600 py-3">
+    <nav className="sticky top-0 left-0 right-0 z-20 bg-white shadow-md dark:bg-black py-0 lg:py-2">
       <div className="flex items-center justify-between lg:max-w-7xl mx-auto px-4">
         {/* Logo */}
         <Link href="/">
-          <h1 className="font-semibold text-3xl"> 🛒 ReTreasure</h1>
+          <h1 className="font-semibold lg:text-3xl text-xl"> 🛒 ReTreasure</h1>
         </Link>
-        <div className="hidden lg:flex items-center bg-white dark:bg-gray-700 text-black rounded-md p-1 border">
-          <Search className="h-5 w-5 text-gray-500 dark:text-gray-300 mx-2" />
-          <input
-            className="border-none outline-none focus:-none w-40 dark:text-gray-200"
-            placeholder="Search "
-          />
-          <MapPin className="h-5 w-5 text-gray-500 mx-2 dark:text-gray-300" />
-          <input
-            className="border-none outline-none w-32 dark:text-gray-200"
-            placeholder="Location"
-          />
-          <Button className="bg-purple-700 text-white px-4 rounded-md">
-            Search
-          </Button>
+        <div className="hidden lg:flex">
+        <SearchField />
         </div>
 
         {/* Desktop Navigation */}
-        <div className="hidden md:flex items-center space-x-4">
+        <div className="hidden lg:flex items-center space-x-4">
           {/* Theme Toggle Button */}
           <button
             onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
@@ -99,11 +88,14 @@ const Navbar = () => {
       </div>
 
       {/* Bottom navbar*/}
-      <div className="md:hidden flex bg-slate-200 items-center px-4 py-2 justify-between space-x-4">
-        <Search className="h-5 w-5 text-gray-500 ml-2" />
+      <div className="lg:hidden flex bg-purple-900 items-center px-4 py-2 justify-between space-x-4">
+        <Search
+          onClick={() => setSearchFieldrOpen(!searchFieldOpen)}
+          className="h-6 w-6 text-gray-200 ml-2"
+        />
 
         <div className="flex gap-2 items-center">
-          <MessageCircleMore className="h-5 w-5" />
+          <MessageCircleMore className=" text-gray-300 h-6 w-6" />
           <Profile />
 
           <Button className="flex items-center bg-white border text-purple-700 px-3 py-1 rounded-md">
@@ -112,9 +104,16 @@ const Navbar = () => {
         </div>
       </div>
 
+      {/* Search field Overlay */}
+      {searchFieldOpen && (
+        <div className="flex lg:hidden absolute left-0  w-full shadow-md rounded-b-md">
+          <SearchField/>
+        </div>
+      )}
+
       {/* Mobile Navigation Overlay */}
       {navbarOpen && (
-        <div className="absolute left-0 mt-2 w-full bg-purple-200 text-black shadow-md rounded-md p-3">
+        <div className="absolute left-0 w-full bg-purple-200 text-black shadow-md rounded-b-md p-3">
           {categories.map((category, index) => (
             <p key={index} className="p-2 hover:bg-gray-100 cursor-pointer">
               {category}

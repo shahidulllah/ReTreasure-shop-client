@@ -3,7 +3,7 @@ import { Button } from "../ui/button";
 
 const SearchField = () => {
   return (
-    <div className="flex items-center bg-white dark:bg-gray-700 text-black rounded-md p-1 border">
+    <div className="flex items-center bg-white dark:bg-gray-700 text-black rounded-full p-1 border border-purple-300">
       <Search className="h-5 w-5 text-gray-500 dark:text-gray-300 mx-2" />
       <input
         className="border-none outline-none focus:-none w-40 dark:text-gray-200"
@@ -14,7 +14,7 @@ const SearchField = () => {
         className="border-none outline-none w-32 dark:text-gray-200"
         placeholder="Location"
       />
-      <Button className="bg-purple-700 text-white rounded-md">
+      <Button className="bg-purple-600 hover:bg-purple-700 text-white rounded-full">
         Search
       </Button>
     </div>

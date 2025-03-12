@@ -15,10 +15,10 @@ export const categories = [
 
 export default function CategoryNavbar() {
   return (
-    <div className="hidden lg:flex bg-purple-900 dark:bg-slate-900 text-white py-3">
-      <div className="relative lg:max-w-7xl mx-auto px-4">
+    <div className="hidden lg:flex bg-purple-800 dark:bg-slate-900 text-white py-3">
+      <div className="relative lg:max-w-7xl mx-auto">
         {/* Desktop Navigation */}
-        <div className="flex items-center gap-3 overflow-x-auto scrollbar-hide">
+        <div className="flex items-center gap-5 overflow-x-auto scrollbar-hide">
           <button className="flex items-center space-x-2 font-semibold">
             <SlidersHorizontal className="w-5 h-5" />
             <span>All Category</span>

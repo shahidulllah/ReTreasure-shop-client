@@ -3,7 +3,7 @@
 import { useEffect } from "react";
 import { fetchListings } from "@/redux/features/listingSlice";
 import CreateListingForm from "@/components/pages/dashboard/CreateListingForm";
-import ListingCard from "@/components/ListingCard";
+import ListingCard from "@/components/shared/ListingCard";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { RootState } from "@/redux/store";
 

@@ -18,31 +18,39 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import { signOut } from "next-auth/react";
+import { usePathname } from "next/navigation";
 
 const navItems = [
   { icon: Home, label: "Home", href: "/" },
-  { icon: LayoutGrid, label: "Overview", href: "/dashboard/overview" },
+  { icon: LayoutGrid, label: "Overview", href: "/dashboard" },
   { icon: FilePlus, label: "Post Listing", href: "/dashboard/listing" },
   { icon: List, label: "Manage Listings", href: "/dashboard/manage-listing" },
   { icon: Heart, label: "Wishlist Feature", href: "/dashboard/wishlist" },
   { icon: MessageCircle, label: "Message", href: "/dashboard/message" },
-  { icon: CreditCard, label: "Track Sales & Purchases", href: "/dashboard/sales-history" },
+  {
+    icon: CreditCard,
+    label: "Track Sales & Purchases",
+    href: "/dashboard/sales-history",
+  },
   { icon: Settings, label: "Profile Management", href: "/dashboard/profile" },
   { icon: LogOut, label: "Logout", href: "#" },
 ];
 
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const pathname = usePathname()
 
   const handleLogout = async () => {
-    await signOut({ callbackUrl: "/" }); 
+    await signOut({ callbackUrl: "/" });
   };
   return (
     <div className="flex min-h-screen">
       {/* Sidebar - Mobile Overlay */}
       <div
-        className={`min-h-screen bg-purple-900 text-gray-100 rounded-r-xl shadow-xl px-6 w-80 fixed md:relative z-50 h-full transition-transform  border-r border-purple-200 ${
-          isOpen ? "translate-x-0 bg-purple-200" : "-translate-x-full md:translate-x-0"
+        className={`min-h-screen bg-purple-900 text-gray-100 rounded-r-xl shadow-xl px-6 w-96 fixed md:relative z-50  transition-transform  border-r border-purple-200 ${
+          isOpen
+            ? "translate-x-0 bg-purple-200"
+            : "-translate-x-full md:translate-x-0"
         }`}
       >
         <div className="flex justify-between items-center p-4 border-b">
@@ -68,24 +76,14 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
         </div>
 
         {/* Navigation */}
-        {/* <nav className="mt-4 space-y-2">
-          {navItems.map((item, index) => (
-            <Link
-              key={index}
-              href={item.href}
-              className="flex items-center p-2 rounded-lg hover:bg-purple-300"
-            >
-              <item.icon className="w-5 h-5 mr-2" />
-              {item.label}
-            </Link>
-          ))}
-        </nav> */}
-         <nav className="mt-4 space-y-2">
+        <nav className="mt-4 space-y-2">
           {navItems.map((item, index) => (
             <div
               key={index}
               onClick={item.label === "Logout" ? handleLogout : undefined}
-              className="flex items-center p-2 rounded-lg hover:bg-purple-300 cursor-pointer"
+              className={`flex items-center p-2 rounded-lg hover:bg-purple-300 hover:text-black cursor-pointer ${
+                pathname === item.href ? "bg-purple-300 text-black" : ""
+              }`}
             >
               <item.icon className="w-5 h-5 mr-2" />
               {item.label === "Logout" ? (
@@ -99,8 +97,8 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
       </div>
 
       {/* Main Content */}
-      <div className="flex-1 p-5">
-        <Button className="md:hidden mb-4" onClick={() => setIsOpen(true)}>
+      <div className="flex-1 bg-purple-200">
+        <Button className="md:hidden" onClick={() => setIsOpen(true)}>
           <Menu size={20} /> Menu
         </Button>
         {children}

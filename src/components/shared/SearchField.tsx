@@ -14,7 +14,7 @@ const SearchField = () => {
         className="border-none outline-none w-32 dark:text-gray-200"
         placeholder="Location"
       />
-      <Button className="bg-purple-600 hover:bg-purple-700 text-white rounded-full">
+      <Button className="bg-white text-purple-600 hover:bg-purple-100 border cursor-pointer border-purple-300 rounded-full">
         Search
       </Button>
     </div>

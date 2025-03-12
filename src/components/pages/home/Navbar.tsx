@@ -54,7 +54,7 @@ const Navbar = () => {
 
           <Profile />
 
-          <Button className="flex items-center bg-white border border-purple-300 text-purple-700 px-3 py-1 rounded-full">
+          <Button className="flex items-center bg-white border hover:bg-purple-100 cursor-pointer border-purple-300 text-purple-700 px-3 py-1 rounded-full">
             <PlusCircle className="h-5 w-5 mr-1" /> Post Listing
           </Button>
         </div>
@@ -98,7 +98,7 @@ const Navbar = () => {
           <MessageCircleMore className=" text-gray-300 h-6 w-6" />
           <Profile />
 
-          <Button className="flex items-center bg-white border border-purple-300 text-purple-700 px-3 py-1 rounded-full">
+          <Button className="flex items-center bg-white border hover:bg-purple-100 border-purple-300 text-purple-700 px-3 py-1 rounded-full">
             <PlusCircle className="h-5 w-5 mr-1" /> Post Listing
           </Button>
         </div>

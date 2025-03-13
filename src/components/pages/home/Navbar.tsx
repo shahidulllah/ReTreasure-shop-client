@@ -13,8 +13,8 @@ import {
 import { useTheme } from "next-themes";
 import { Button } from "@/components/ui/button";
 import Profile from "@/components/shared/Profile";
-import { categories } from "./CategoryNav";
 import SearchField from "@/components/shared/SearchField";
+import { categories } from "@/components/shared/listsOFArray";
 
 const Navbar = () => {
   const [navbarOpen, setNavbarOpen] = useState(false);

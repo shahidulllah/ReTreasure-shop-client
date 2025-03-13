@@ -19,7 +19,7 @@ interface ListingCardProps {
 const ListingCard = ({ listing }: ListingCardProps) => {
   return (
     <div
-      className=" border border-purple-300 rounded-lg overflow-hidden hover:shadow-lg transition-shadow space-y-3"
+      className=" border border-purple-300 rounded-lg overflow-hidden hover:shadow-lg transition-shadow space-y-3 max-h-[370px]"
     >
       <div className="w-full h-48 relative">
         <Image src={listing.image} alt={listing.title} layout="fill" priority />

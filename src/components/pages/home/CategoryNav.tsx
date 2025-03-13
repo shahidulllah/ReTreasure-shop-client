@@ -1,17 +1,5 @@
+import { categories } from "@/components/shared/listsOFArray";
 import { ArrowRight, SlidersHorizontal } from "lucide-react";
-
-export const categories = [
-  "All Category",
-  "Mobiles",
-  "Electronics",
-  "Vehicles",
-  "Property",
-  "Home Living",
-  "Pets Animals",
-  "Mens Fashion",
-  "Womens Fashion",
-  "Hobbies Sports Kids",
-];
 
 export default function CategoryNavbar() {
   return (

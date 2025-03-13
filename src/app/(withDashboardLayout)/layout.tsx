@@ -24,7 +24,7 @@ const navItems = [
   { icon: Home, label: "Home", href: "/" },
   { icon: LayoutGrid, label: "Overview", href: "/dashboard" },
   { icon: FilePlus, label: "Post Listing", href: "/dashboard/listing" },
-  { icon: List, label: "Manage Listings", href: "/dashboard/manage-listing" },
+  { icon: List, label: "Manage Listings", href: "/dashboard/listings" },
   { icon: Heart, label: "Wishlist Feature", href: "/dashboard/wishlist" },
   { icon: MessageCircle, label: "Message", href: "/dashboard/message" },
   {
@@ -47,7 +47,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
     <div className="flex min-h-screen">
       {/* Sidebar - Mobile Overlay */}
       <div
-        className={`min-h-screen bg-purple-900 text-gray-100 rounded-r-xl shadow-xl px-6 w-96 fixed md:relative z-50  transition-transform  border-r border-purple-200 ${
+        className={` min-h-screen bg-purple-900 text-gray-100 shadow-xl px-6 w-96 fixed z-50  transition-transform  border-r border-purple-200 ${
           isOpen
             ? "translate-x-0 bg-purple-200"
             : "-translate-x-full md:translate-x-0"
@@ -97,7 +97,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
       </div>
 
       {/* Main Content */}
-      <div className="flex-1 bg-purple-200">
+      <div className="flex-1 bg-purple-200 lg:ml-96">
         <Button className="md:hidden" onClick={() => setIsOpen(true)}>
           <Menu size={20} /> Menu
         </Button>

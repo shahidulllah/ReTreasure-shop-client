@@ -1,9 +1,9 @@
-import ListingPage from "@/components/pages/dashboard/CreateListingForm";
+import CreateLisngForm from "@/components/pages/dashboard/CreateListingForm";
 
 const page = () => {
   return (
     <div>
-      <ListingPage/>
+      <CreateLisngForm />
     </div>
   );
 };

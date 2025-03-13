@@ -21,7 +21,7 @@ const Dashboard = () => {
           {/* 2 */}
           <div className="bg-purple-100 flex justify-between items-center p-6 rounded-lg shadow-sm">
             <div>
-              <h2 className="text-4xl font-bold text-gray-800">08</h2>
+              <h2 className="text-4xl font-bold text-gray-800">05</h2>
               <p className="text-gray-600">Favourite Listings</p>
             </div>
             <div className="bg-white text-green-400 p-4 rounded-lg">
@@ -32,7 +32,7 @@ const Dashboard = () => {
           {/* 3 */}
           <div className="bg-pink-100 flex justify-between items-center p-6 rounded-lg shadow-sm">
             <div>
-              <h2 className="text-4xl font-bold text-gray-800">08</h2>
+              <h2 className="text-4xl font-bold text-gray-800">12</h2>
               <p className="text-gray-600">Expire Listings</p>
             </div>
             <div className="bg-white text-red-400 p-4 rounded-lg">

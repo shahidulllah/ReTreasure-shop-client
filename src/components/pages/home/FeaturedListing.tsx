@@ -1,45 +1,38 @@
+"use client";
+
 import Image from "next/image";
 import { MapPin, Layers, ArrowUp } from "lucide-react";
 import { CardContent } from "@/components/ui/card";
-
-const featuredListings = [
-  {
-    id: 1,
-    image: "https://i.ibb.co.com/TkF4w7g/banner-book.png",
-    price: "47250 ৳",
-    title: "New Blood Circulative Massager",
-    location: "Bangladesh",
-    category: "Healthcare",
-    time: "8 months ago",
-  },
-  {
-    id: 2,
-    image: "https://i.ibb.co.com/xpCMSF7/p-4.webp",
-    price: "38500 ৳",
-    title: "Premium Massage Chair",
-    location: "Dhaka, Bangladesh",
-    category: "Wellness",
-    time: "5 months ago",
-  },
-  {
-    id: 3,
-    image: "https://i.ibb.co.com/BV4wc9Ds/p-1.jpg",
-    price: "29999 ৳",
-    title: "Electric Foot Massager",
-    location: "Chittagong, Bangladesh",
-    category: "Healthcare",
-    time: "6 months ago",
-  },
-];
+import { RootState } from "@/redux/store";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { useEffect } from "react";
+import { fetchListings } from "@/services/listingService";
+import { getTimeAgo } from "@/utils/getTime";
 
 export default function FeaturedListings() {
+  const dispatch = useAppDispatch();
+  const { listings, loading } = useAppSelector(
+    (state: RootState) => state.listings
+  );
+
+  useEffect(() => {
+    dispatch(fetchListings({}));
+  }, [dispatch]);
+
+  if (loading) {
+    <p className="text-center mt-12">loading..</p>;
+  }
+
+  // Sort featured listings based on lower price
+  const sortedListings = [...listings].sort((a, b) => a.price - b.price);
+
   return (
     <div className="lg:max-w-7xl mx-auto my-10 px-4">
       <h2 className="text-3xl font-bold mb-5 text-center">Featured Listings</h2>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
-        {featuredListings.map((listing) => (
+        {sortedListings.slice(0, 3).map((listing) => (
           <div
-            key={listing.id}
+            key={listing._id}
             className="rounded-lg shadow-lg overflow-hidden border"
           >
             <div className="relative w-full h-48">
@@ -51,7 +44,9 @@ export default function FeaturedListings() {
               />
             </div>
             <CardContent className="p-4 space-y-2">
-              <p className="text-red-600 font-bold text-lg">{listing.price}</p>
+              <p className="text-red-600 font-bold text-lg">
+                {listing.price} <span className="font-extrabold">৳</span>
+              </p>
               <h3 className="font-semibold truncate">{listing.title}</h3>
               <div className="flex items-center text-gray-600 text-sm mt-1">
                 <MapPin className="w-4 h-4 mr-1" />
@@ -62,7 +57,9 @@ export default function FeaturedListings() {
                 {listing.category}
               </div>
               <div className="flex justify-between">
-                <p className="text-xs text-gray-500 mt-2">{listing.time}</p>
+                <p className="text-xs text-gray-500 mt-2">
+                  {getTimeAgo(listing.createdAt)}
+                </p>
                 <div className="flex items-center text-purple-700 text-xs font-bold mt-2">
                   <ArrowUp className="w-4 h-4 mr-1" />
                   FEATURED

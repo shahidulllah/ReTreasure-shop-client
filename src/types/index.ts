@@ -4,11 +4,12 @@ export interface IListing {
   description: string;
   price: number;
   condition: string;
+  location: string;
   category: string;
   image: string;
-  quantity: number;
   userId: string | undefined;
   status: "available" | "sold";
+  createdAt: string;
 }
 
 export interface FetchListingsParams {

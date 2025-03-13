@@ -13,6 +13,7 @@ export default function ListingsPage() {
   const { listings, loading } = useAppSelector(
     (state: RootState) => state.listings
   );
+
   const [showFilters, setShowFilters] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [location, setLocation] = useState("");
@@ -20,6 +21,7 @@ export default function ListingsPage() {
   const [priceRange, setPriceRange] = useState(200);
   const [locationSuggestions, setLocationSuggestions] = useState<string[]>([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
+  const [selectedCondition, setSelectedCondition] = useState("");
 
   const handleLocationFocus = () => {
     setLocationSuggestions(locations);
@@ -51,17 +53,32 @@ export default function ListingsPage() {
     setShowSuggestions(false);
   };
 
+  //Handle condition
+  const handleConditionSelect = (condition: string) => {
+    setSelectedCondition(condition);
+  };
+
   useEffect(() => {
     const payload = {
       search: searchTerm,
       location,
       maxPrice: priceRange,
+      ...(selectedCondition !== "All" && {
+        condition: selectedCondition,
+      }),
       ...(selectedCategory !== "All Category" && {
         category: selectedCategory,
       }),
     };
     dispatch(fetchListings(payload));
-  }, [dispatch, searchTerm, location, selectedCategory, priceRange]);
+  }, [
+    dispatch,
+    searchTerm,
+    location,
+    selectedCategory,
+    priceRange,
+    selectedCondition,
+  ]);
 
   return (
     <div className="flex px-4 lg:max-w-7xl mx-auto my-8">
@@ -127,13 +144,44 @@ export default function ListingsPage() {
 
           {/* Filter with condition */}
           <div className="flex gap-2 border border-purple-300 rounded-lg">
-            <button className="px-4 py-2 rounded-lg  bg-white hover:bg-purple-100 cursor-pointer">
+            <button
+              onClick={() => handleConditionSelect("All")}
+              className={`px-4 py-2 rounded-l-md ${
+                selectedCondition === "All"
+                  ? "border-b-purple-600 border-b-3 text-black"
+                  : "bg-white hover:bg-purple-100"
+              } cursor-pointer`}
+            >
+              All
+            </button>
+            <button
+              onClick={() => handleConditionSelect("New")}
+              className={`px-4 py-2 ${
+                selectedCondition === "New"
+                  ? "border-b-purple-600 border-b-3 text-black"
+                  : "bg-white hover:bg-purple-100"
+              } cursor-pointer`}
+            >
               New
             </button>
-            <button className=" px-4 py-2 rounded-lg  bg-white hover:bg-purple-100 cursor-pointer">
+            <button
+              onClick={() => handleConditionSelect("Used")}
+              className={`px-4 py-2 ${
+                selectedCondition === "Used"
+                  ? "border-b-purple-600 border-b-3 text-black"
+                  : "bg-white hover:bg-purple-100"
+              } cursor-pointer`}
+            >
               Used
             </button>
-            <button className=" px-4 py-2 rounded-lg bg-white hover:bg-purple-100 cursor-pointer">
+            <button
+              onClick={() => handleConditionSelect("Repaired")}
+              className={`px-4 py-2 rounded-r-md ${
+                selectedCondition === "Repaired"
+                  ? "border-b-purple-600 border-b-3 text-black"
+                  : "bg-white hover:bg-purple-100"
+              } cursor-pointer`}
+            >
               Repaired
             </button>
           </div>

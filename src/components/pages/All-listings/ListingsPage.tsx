@@ -18,10 +18,12 @@ export default function ListingsPage() {
   const [searchTerm, setSearchTerm] = useState("");
   const [location, setLocation] = useState("");
   const [selectedCategory, setSelectedCategory] = useState(categories[0]);
-  const [priceRange, setPriceRange] = useState(200);
+  const [priceRange, setPriceRange] = useState(15000);
   const [locationSuggestions, setLocationSuggestions] = useState<string[]>([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [selectedCondition, setSelectedCondition] = useState("");
+  const [page, setPage] = useState(1);
+  const [hasMore, setHasMore] = useState(true);
 
   const handleLocationFocus = () => {
     setLocationSuggestions(locations);
@@ -58,10 +60,17 @@ export default function ListingsPage() {
     setSelectedCondition(condition);
   };
 
+  // Handle "Load More" button click
+  const handleLoadMore = () => {
+    setPage((prevPage) => prevPage + 1);
+  };
+
   useEffect(() => {
     const payload = {
       search: searchTerm,
       location,
+      page,
+      limit: 8,
       maxPrice: priceRange,
       ...(selectedCondition !== "All" && {
         condition: selectedCondition,
@@ -70,7 +79,11 @@ export default function ListingsPage() {
         category: selectedCategory,
       }),
     };
-    dispatch(fetchListings(payload));
+    dispatch(fetchListings(payload)).then((action) => {
+      if (action.payload.length < 8) {
+        setHasMore(false);
+      }
+    });
   }, [
     dispatch,
     searchTerm,
@@ -78,6 +91,7 @@ export default function ListingsPage() {
     selectedCategory,
     priceRange,
     selectedCondition,
+    page
   ]);
 
   return (
@@ -235,7 +249,7 @@ export default function ListingsPage() {
               showFilters ? " grid-cols-3" : " grid-cols-4"
             }`}
           >
-            {loading ? (
+            {loading && page === 1 ? (
               <p className="text-center mt-12 text-black dark:text-white">
                 Loading listings...
               </p>
@@ -247,9 +261,14 @@ export default function ListingsPage() {
           </div>
         </div>
         <div className="text-center mt-8">
-          <Button className="bg-purple-600 hover:bg-purple-700 cursor-pointer">
-            Load More Listings..
-          </Button>
+          {hasMore && (
+            <Button
+              onClick={handleLoadMore}
+              className="bg-purple-600 hover:bg-purple-700 cursor-pointer"
+            >
+              Load More ..
+            </Button>
+          )}
         </div>
       </div>
     </div>

@@ -1,32 +1,26 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import {
-  getListings,
   createListing,
   updateListing,
   deleteListing,
+  fetchListings,
 } from "@/services/listingService";
 import { IListing } from "@/types";
 
 interface ListingState {
   listings: IListing[];
   loading: boolean;
-  error: string | null;
+  status: string;
+  error: string | null | undefined;
 }
 
 const initialState: ListingState = {
   listings: [],
+  status: "idle",
   loading: false,
   error: null,
 };
-
-// Fetch Listings
-export const fetchListings = createAsyncThunk(
-  "listings/fetchListings",
-  async (params: any) => {
-    return await getListings(params);
-  }
-);
 
 // Create Listing
 export const addListing = createAsyncThunk(
@@ -59,8 +53,17 @@ const listingSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
+      //FatchListins
+      .addCase(fetchListings.pending, (state) => {
+        state.status = "loading";
+      })
       .addCase(fetchListings.fulfilled, (state, action) => {
-        state.listings = action.payload.data;
+        state.status = "succeeded";
+        state.listings = action.payload;
+      })
+      .addCase(fetchListings.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message;
       })
       .addCase(addListing.fulfilled, (state, action) => {
         state.listings.push(action.payload);

@@ -7,6 +7,7 @@ import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { RootState } from "@/redux/store";
 import { fetchListings } from "@/services/listingService";
 import { categories, locations } from "@/components/shared/listsOFArray";
+import { useRouter, useSearchParams } from "next/navigation";
 
 export default function ListingsPage() {
   const dispatch = useAppDispatch();
@@ -14,10 +15,13 @@ export default function ListingsPage() {
     (state: RootState) => state.listings
   );
 
+  const searchParams = useSearchParams();
+  const router = useRouter(); 
+  const selectedCategory = searchParams.get("category") || "All Category"; 
+
   const [showFilters, setShowFilters] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [location, setLocation] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState(categories[0]);
   const [priceRange, setPriceRange] = useState(15000);
   const [locationSuggestions, setLocationSuggestions] = useState<string[]>([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
@@ -63,6 +67,10 @@ export default function ListingsPage() {
   // Handle "Load More" button click
   const handleLoadMore = () => {
     setPage((prevPage) => prevPage + 1);
+  };
+
+  const handleCategorySelect = (category: string) => {
+    router.push(`/listings?category=${encodeURIComponent(category)}`);
   };
 
   useEffect(() => {
@@ -232,7 +240,7 @@ export default function ListingsPage() {
                         name="category"
                         value={category}
                         checked={selectedCategory === category}
-                        onChange={() => setSelectedCategory(category)}
+                        onChange={() => handleCategorySelect(category)}
                         defaultChecked={index === 0}
                       />
                       {category}

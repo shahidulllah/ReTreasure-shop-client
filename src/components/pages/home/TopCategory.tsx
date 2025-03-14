@@ -1,3 +1,5 @@
+"use client"
+
 import React from "react";
 import {
   Tv,
@@ -13,8 +15,15 @@ import {
   Dumbbell,
   ShoppingCart,
 } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 const TopCategories = () => {
+  const router = useRouter();
+
+  const handleCategorySelect = (category: string) => {
+    router.push(`/listings?category=${encodeURIComponent(category)}`);
+  };
+
   const categories = [
     { name: "Electronics", icon: <Tv className="w-12 h-12" /> },
     { name: "Vehicles", icon: <Car className="w-12 h-12" /> },
@@ -37,6 +46,7 @@ const TopCategories = () => {
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
           {categories.map((category, index) => (
             <div
+              onClick={() => handleCategorySelect(category.name)}
               key={index}
               className="flex flex-col items-center justify-center p-4 bg-white dark:bg-gray-700 border border-gray-400 rounded-lg hover:shadow-md transition-shadow cursor-pointer"
             >

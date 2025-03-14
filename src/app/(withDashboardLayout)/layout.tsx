@@ -17,7 +17,7 @@ import {
   Home,
 } from "lucide-react";
 import Image from "next/image";
-import { signOut } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import { usePathname } from "next/navigation";
 
 const navItems = [
@@ -38,7 +38,9 @@ const navItems = [
 
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const pathname = usePathname()
+  const pathname = usePathname();
+  const { data: session } = useSession();
+  const user = session?.user;
 
   const handleLogout = async () => {
     await signOut({ callbackUrl: "/" });
@@ -64,15 +66,18 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
         <div className="flex flex-col items-center py-4 border-b">
           <div className="w-12 h-12 rounded-full border overflow-hidden">
             <Image
-              src="https://ibb.co.com/KWD7nJQ"
+              src={
+                user?.image ||
+                "https://th.bing.com/th/id/OIP.8Wzkq9GNyaRz3xf4L_KMAQHaHa?rs=1&pid=ImgDetMain"
+              }
               alt="Profile Picture"
               width={64}
               height={64}
               className="object-cover"
             />
           </div>
-          <h2 className="text-lg font-bold">Md. Shahidullah</h2>
-          <p className="text-sm ">mdshahidsumon177@gmail.com</p>
+          <h2 className="text-lg font-bold">{user?.name}</h2>
+          <p className="text-sm ">{user?.email}</p>
         </div>
 
         {/* Navigation */}

@@ -63,23 +63,24 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
         </div>
 
         {/* Profile */}
-        <div className="flex flex-col items-center py-4 border-b">
-          <div className="w-12 h-12 rounded-full border overflow-hidden">
-            <Image
-              src={
-                user?.image ||
-                "https://th.bing.com/th/id/OIP.8Wzkq9GNyaRz3xf4L_KMAQHaHa?rs=1&pid=ImgDetMain"
-              }
-              alt="Profile Picture"
-              width={64}
-              height={64}
-              className="object-cover"
-            />
+        {user && (
+          <div className="flex flex-col items-center py-4 border-b">
+            <div className="w-12 h-12 rounded-full border overflow-hidden">
+              <Image
+                src={
+                  user?.image ||
+                  "https://th.bing.com/th/id/OIP.8Wzkq9GNyaRz3xf4L_KMAQHaHa?rs=1&pid=ImgDetMain"
+                }
+                alt="Profile Picture"
+                width={64}
+                height={64}
+                className="object-cover"
+              />
+            </div>
+            <h2 className="text-lg font-bold">{user?.name}</h2>
+            <p className="text-sm ">{user?.email}</p>
           </div>
-          <h2 className="text-lg font-bold">{user?.name}</h2>
-          <p className="text-sm ">{user?.email}</p>
-        </div>
-
+        )}
         {/* Navigation */}
         <nav className="mt-4 space-y-2">
           {navItems.map((item, index) => (

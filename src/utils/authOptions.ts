@@ -19,13 +19,7 @@ export const authOptions: NextAuthOptions = {
           const user = res.data.user;
 
           if (user) {
-            return {
-              id: user._id, 
-              name: user.name,
-              email: user.email,
-              image: user.image,
-              token: user.token,
-            };
+            return user;
           }
           return null;
         } catch (error) {
@@ -44,6 +38,7 @@ export const authOptions: NextAuthOptions = {
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
+        token.role = user.role;
         token.id = user.id;
         token.accessToken = user.token;
       }
@@ -51,6 +46,7 @@ export const authOptions: NextAuthOptions = {
     },
 
     async session({ session, token }) {
+      session.user.role = token.role as string;
       session.user.id = token.id as string;
       session.user.token = token.accessToken as string | undefined;
       return session;

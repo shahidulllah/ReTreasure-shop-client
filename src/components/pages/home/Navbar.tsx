@@ -34,7 +34,7 @@ const Navbar = () => {
           <h1 className="font-semibold lg:text-3xl text-xl"> 🛒 ReTreasure</h1>
         </Link>
         <div className="hidden lg:flex">
-        <SearchField />
+          <SearchField />
         </div>
 
         {/* Desktop Navigation */}
@@ -54,9 +54,11 @@ const Navbar = () => {
 
           <Profile />
 
-          <Button className="flex items-center bg-white border hover:bg-purple-100 cursor-pointer border-purple-300 text-purple-700 px-3 py-1 rounded-full">
-            <PlusCircle className="h-5 w-5 mr-1" /> Post Listing
-          </Button>
+          <Link href={"dashboard/listing"}>
+            <Button className="flex items-center bg-white border hover:bg-purple-100 cursor-pointer border-purple-300 text-purple-700 px-3 py-1 rounded-full">
+              <PlusCircle className="h-5 w-5 mr-1" /> Post Listing
+            </Button>
+          </Link>
         </div>
 
         {/* Mobile Menu Button */}
@@ -98,16 +100,18 @@ const Navbar = () => {
           <MessageCircleMore className=" text-gray-300 h-6 w-6" />
           <Profile />
 
-          <Button className="flex items-center bg-white border hover:bg-purple-100 border-purple-300 text-purple-700 px-3 py-1 rounded-full">
-            <PlusCircle className="h-5 w-5 mr-1" /> Post Listing
-          </Button>
+          <Link href={"dashboard/listing"}>
+            <Button className="flex items-center bg-white border hover:bg-purple-100 border-purple-300 text-purple-700 px-3 py-1 rounded-full">
+              <PlusCircle className="h-5 w-5 mr-1" /> Post Listing
+            </Button>
+          </Link>
         </div>
       </div>
 
       {/* Search field Overlay */}
       {searchFieldOpen && (
         <div className="flex lg:hidden absolute left-0  w-full shadow-md rounded-b-md">
-          <SearchField/>
+          <SearchField />
         </div>
       )}
 

@@ -7,6 +7,7 @@ import { useState } from "react";
 const Profile = () => {
   const { data: session } = useSession();
   const [dropdownOpen, setDropdownOpen] = useState(false);
+
   return (
     <div>
       {/* Login/Profile Section */}

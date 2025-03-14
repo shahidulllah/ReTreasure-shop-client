@@ -4,31 +4,6 @@ import axios from "axios";
 
 const API_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
-// Get Listings (with search, filter, pagination)
-// export const getListings = async (params: any) => {
-//   try {
-//     const response = await axios.get(`${API_URL}/api/listings`, { params });
-//     return response.data;
-//   } catch (error) {
-//     throw error;
-//   }
-// };
-
-export const fetchListings = createAsyncThunk(
-  "listings/fetchListings",
-  async (filters: Record<string, string | number>) => {
-    try {
-      const params = new URLSearchParams(filters as any).toString();
-      const response = await axios.get(`${API_URL}/api/listings?${params}`);
-      
-      return response.data.data;
-    } catch (error) {
-      console.log(error);
-      throw error;
-    }
-  }
-);
-
 // Create Listing
 export const createListing = async (data: any, token: string) => {
   try {
@@ -43,6 +18,22 @@ export const createListing = async (data: any, token: string) => {
     throw error;
   }
 };
+
+//Fetch lisitn using redux
+export const fetchListings = createAsyncThunk(
+  "listings/fetchListings",
+  async (filters: Record<string, string | number>) => {
+    try {
+      const params = new URLSearchParams(filters as any).toString();
+      const response = await axios.get(`${API_URL}/api/listings?${params}`);
+      
+      return response.data.data;
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  }
+);
 
 // Update Listing
 export const updateListing = async (id: string, data: any, token: string) => {

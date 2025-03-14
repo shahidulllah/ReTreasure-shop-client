@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import {
-  createListing,
   updateListing,
   deleteListing,
   fetchListings,
@@ -22,13 +21,6 @@ const initialState: ListingState = {
   error: null,
 };
 
-// Create Listing
-export const addListing = createAsyncThunk(
-  "listings/addListing",
-  async ({ data, token }: any) => {
-    return await createListing(data, token);
-  }
-);
 
 // Update Listing
 export const editListing = createAsyncThunk(
@@ -64,9 +56,6 @@ const listingSlice = createSlice({
       .addCase(fetchListings.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message;
-      })
-      .addCase(addListing.fulfilled, (state, action) => {
-        state.listings.push(action.payload);
       })
       .addCase(editListing.fulfilled, (state, action) => {
         state.listings = state.listings.map((item) =>

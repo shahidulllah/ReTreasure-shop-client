@@ -3,7 +3,6 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
-import { createListing } from "@/services/listingService";
 import { toast } from "sonner";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -17,6 +16,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Loader2 } from "lucide-react";
+import { categories, locations } from "@/components/shared/listsOFArray";
+import { createListing } from "@/services/listingService";
 
 export default function CreateListingForm() {
   const router = useRouter();
@@ -24,12 +25,15 @@ export default function CreateListingForm() {
   const token = session?.user?.token;
   const userId = session?.user?.id;
 
+  console.log("Session",session);
+
   const [form, setForm] = useState({
     title: "",
     description: "",
     price: "",
     category: "",
     condition: "",
+    location: "",
     image: "",
   });
   const [loading, setLoading] = useState(false);
@@ -48,6 +52,10 @@ export default function CreateListingForm() {
     setForm({ ...form, condition: value });
   };
 
+  const handleLocationChange = (value: string) => {
+    setForm({ ...form, location: value });
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
@@ -64,10 +72,9 @@ export default function CreateListingForm() {
         price: parseFloat(form.price),
         sellerId: userId,
       };
-
       await createListing(listingData, token);
       toast.success("Listing posted successfully!");
-      router.push("/dashboard");
+      router.push("/dashboard/listings");
     } catch (error) {
       console.error(error);
       toast.error("Failed to post the listing. Try again.");
@@ -80,7 +87,7 @@ export default function CreateListingForm() {
     <div className="flex items-center justify-center min-h-screen p-4 bg-gray-100">
       <Card className="w-full max-w-xl p-6 bg-white shadow-lg rounded-xl">
         <CardHeader>
-          <CardTitle className="text-2xl font-bold text-center text-gray-800">
+          <CardTitle className="text-2xl lg:text-3xl uppercase font-bold text-center text-gray-800">
             Post an Item for Sale
           </CardTitle>
         </CardHeader>
@@ -113,18 +120,38 @@ export default function CreateListingForm() {
               />
             </div>
 
-            {/* Price */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Price ($)
-              </label>
-              <Input
-                type="number"
-                name="price"
-                placeholder="Enter the price"
-                onChange={handleChange}
-                required
-              />
+            {/* Price & Location*/}
+            <div className="flex justify-between gap-2">
+              <div className="w-full">
+                <label className="block text-sm font-medium text-gray-700 mb-1 w-full">
+                  Price ($)
+                </label>
+                <Input
+                  type="number"
+                  name="price"
+                  placeholder="Price"
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+              <div className="w-full">
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Location
+                </label>
+                <Select onValueChange={handleLocationChange}>
+                  <SelectTrigger className="w-full">
+                    <SelectValue placeholder="Select Location" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {locations.map((location, index) => (
+                      <SelectItem key={index} value={location}>
+                        {location}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+              ;
             </div>
 
             {/* Category and Condition */}
@@ -138,11 +165,11 @@ export default function CreateListingForm() {
                     <SelectValue placeholder="Select Category" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="electronics">Electronics</SelectItem>
-                    <SelectItem value="fashion">Fashion</SelectItem>
-                    <SelectItem value="furniture">Furniture</SelectItem>
-                    <SelectItem value="vehicles">Vehicles</SelectItem>
-                    <SelectItem value="others">Others</SelectItem>
+                  {categories.map((category, index) => (
+                      <SelectItem key={index} value={category}>
+                        {category}
+                      </SelectItem>
+                    ))}
                   </SelectContent>
                 </Select>
               </div>

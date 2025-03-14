@@ -8,7 +8,6 @@ export interface IListing {
   category: string;
   image: string;
   userId: string | undefined;
-  status: "available" | "sold";
   createdAt: string;
 }
 

@@ -1,9 +1,8 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 import {
   updateListing,
-  deleteListing,
   fetchListings,
+  removeListing,
 } from "@/services/listingService";
 import { IListing } from "@/types";
 
@@ -20,24 +19,6 @@ const initialState: ListingState = {
   loading: false,
   error: null,
 };
-
-
-// Update Listing
-export const editListing = createAsyncThunk(
-  "listings/editListing",
-  async ({ id, data, token }: any) => {
-    return await updateListing(id, data, token);
-  }
-);
-
-// Delete Listing
-export const removeListing = createAsyncThunk(
-  "listings/removeListing",
-  async ({ id, token }: any) => {
-    await deleteListing(id, token);
-    return id;
-  }
-);
 
 const listingSlice = createSlice({
   name: "listings",
@@ -57,7 +38,7 @@ const listingSlice = createSlice({
         state.status = "failed";
         state.error = action.error.message;
       })
-      .addCase(editListing.fulfilled, (state, action) => {
+      .addCase(updateListing.fulfilled, (state, action) => {
         state.listings = state.listings.map((item) =>
           item._id === action.payload._id ? action.payload : item
         );

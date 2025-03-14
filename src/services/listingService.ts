@@ -13,6 +13,7 @@ export const createListing = async (data: any, token: string) => {
         "Content-Type": "application/json",
       },
     });
+
     return response.data;
   } catch (error) {
     throw error;
@@ -26,7 +27,7 @@ export const fetchListings = createAsyncThunk(
     try {
       const params = new URLSearchParams(filters as any).toString();
       const response = await axios.get(`${API_URL}/api/listings?${params}`);
-      
+
       return response.data.data;
     } catch (error) {
       console.log(error);
@@ -35,31 +36,37 @@ export const fetchListings = createAsyncThunk(
   }
 );
 
-// Update Listing
-export const updateListing = async (id: string, data: any, token: string) => {
-  try {
-    const response = await axios.put(`${API_URL}/api/listings/${id}`, data, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-      },
-    });
-    return response.data;
-  } catch (error) {
-    throw error;
+export const updateListing = createAsyncThunk(
+  "listings/editListing",
+  async ({ id, data, token }: any) => {
+    try {
+      const response = await axios.put(`${API_URL}/api/listings/${id}`, data, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      });
+      return response.data.data;
+    } catch (error) {
+      throw error;
+    }
   }
-};
+);
 
 // Delete Listing
-export const deleteListing = async (id: string, token: string) => {
-  try {
-    await axios.delete(`${API_URL}/api/listings/${id}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-      },
-    });
-  } catch (error) {
-    throw error;
+export const removeListing = createAsyncThunk(
+  "listings/removeListing",
+  async ({ id, token }: { id: string; token: string }) => {
+    try {
+      await axios.delete(`${API_URL}/api/listings/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      });
+      return id;
+    } catch (error) {
+      throw error;
+    }
   }
-};
+);

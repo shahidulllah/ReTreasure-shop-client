@@ -1,61 +1,152 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import Image from "next/image";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { RootState } from "@/redux/store";
-import { fetchListings } from "@/services/listingService";
+import {
+  fetchListings,
+  removeListing,
+  updateListing,
+} from "@/services/listingService";
+import { Trash, Pencil } from "lucide-react";
+import Image from "next/image";
+import { useSession } from "next-auth/react";
+import { toast } from "sonner";
 
 export default function ManageListingsPage() {
   const dispatch = useAppDispatch();
   const { listings, loading } = useAppSelector(
     (state: RootState) => state.listings
   );
+  const { data: session } = useSession();
+  const token = session?.user?.token;
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const listingsPerPage = 7;
 
   useEffect(() => {
     dispatch(fetchListings({}));
   }, [dispatch]);
 
-  if (loading) {
-    <p className="text-black dark:text-white text-center">Loading...</p>;
-  }
+  // Pagination logic
+  const indexOfLastListing = currentPage * listingsPerPage;
+  const indexOfFirstListing = indexOfLastListing - listingsPerPage;
+  const currentListings = listings.slice(
+    indexOfFirstListing,
+    indexOfLastListing
+  );
+  const totalPages = Math.ceil(listings.length / listingsPerPage);
+
+  const handleDelete = async (id: string) => {
+    if (token) {
+      try {
+        await dispatch(removeListing({ id, token })).unwrap();
+        toast.success("Listing deleted successfully");
+        dispatch(fetchListings({})); 
+      } catch (error) {
+        console.log(error);
+        toast.error("Failed to delete listing");
+      }
+    }
+  };
+
+  const handleEdit = (id: string) => {
+    if (token) {
+      updateListing({ id, token });
+    }
+  };
 
   return (
-    <div className="p-4">
-      <h1 className="text-2xl font-semibold mb-4">Manage Listings</h1>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {listings.map((listing) => (
-          <Card key={listing._id}>
-            <CardHeader>
-              <CardTitle>{listing.title}</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <Image
-                src={listing.image}
-                alt={listing.title}
-                width={200}
-                height={150}
-                className="rounded-lg"
-              />
-              <p>{listing.description}</p>
-              <p className="text-sm text-gray-500">Price: ${listing.price}</p>
-              <p className="text-sm text-gray-500">
-                Category: {listing.category}
-              </p>
-              <p className="text-sm text-gray-500">
-                Condition: {listing.condition}
-              </p>
-              <div className="flex justify-between mt-3">
-                <Button size="sm">Edit</Button>
-                <Button size="sm" variant="destructive">
-                  Delete
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
-        ))}
+    <div className="p-12">
+      <h1 className="text-2xl lg:text-3xl font-semibold mb-4">
+        Manage Listings ({listings.length})
+      </h1>
+      <div className="bg-gray-300 p-4 rounded-lg">
+        {loading ? (
+          <p className="text-black dark:text-white text-center">Loading...</p>
+        ) : (
+          <div className="overflow-x-auto">
+            <Table className="">
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Image</TableHead>
+                  <TableHead>Title</TableHead>
+                  <TableHead>Category</TableHead>
+                  <TableHead>Price</TableHead>
+                  <TableHead>Condition</TableHead>
+                  <TableHead>Actions</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {currentListings.map((listing) => (
+                  <TableRow key={listing._id}>
+                    <TableCell>
+                      <Image
+                        src={listing.image}
+                        alt={listing.title}
+                        width={50}
+                        height={50}
+                        className="rounded-md border border-purple-400"
+                      />
+                    </TableCell>
+                    <TableCell>{listing.title}</TableCell>
+                    <TableCell>{listing.category}</TableCell>
+                    <TableCell>${listing.price}</TableCell>
+                    <TableCell>{listing.condition}</TableCell>
+                    <TableCell className="flex gap-2">
+                      <Button
+                        size="icon"
+                        variant="outline"
+                        onClick={() => handleEdit(listing._id)}
+                        className="cursor-pointer"
+                      >
+                        <Pencil className="w-4 h-4" />
+                      </Button>
+                      <Button
+                        size="icon"
+                        variant="destructive"
+                        onClick={() => handleDelete(listing._id)}
+                        className="cursor-pointer"
+                      >
+                        <Trash className="w-4 h-4" />
+                      </Button>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+
+            {/* Pagination */}
+            <div className="flex justify-center mt-4 gap-2">
+              <Button
+                disabled={currentPage === 1}
+                onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+              >
+                Previous
+              </Button>
+              <span className="px-4 py-2">
+                Page {currentPage} of {totalPages}
+              </span>
+              <Button
+                disabled={currentPage === totalPages}
+                onClick={() =>
+                  setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+                }
+              >
+                Next
+              </Button>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

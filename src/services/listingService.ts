@@ -40,7 +40,7 @@ export const updateListing = createAsyncThunk(
   "listings/editListing",
   async ({ id, data, token }: any) => {
     try {
-      const response = await axios.put(`${API_URL}/api/listings/${id}`, data, {
+      const response = await axios.patch(`${API_URL}/api/listings/${id}`, data, {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",

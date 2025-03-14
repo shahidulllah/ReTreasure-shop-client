@@ -38,11 +38,15 @@ const listingSlice = createSlice({
         state.status = "failed";
         state.error = action.error.message;
       })
+
+      //Update
       .addCase(updateListing.fulfilled, (state, action) => {
         state.listings = state.listings.map((item) =>
           item._id === action.payload._id ? action.payload : item
         );
       })
+
+      //Remove
       .addCase(removeListing.fulfilled, (state, action) => {
         state.listings = state.listings.filter(
           (item) => item._id !== action.payload

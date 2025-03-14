@@ -21,6 +21,8 @@ import { Trash, Pencil } from "lucide-react";
 import Image from "next/image";
 import { useSession } from "next-auth/react";
 import { toast } from "sonner";
+import { IListing } from "@/types";
+import { UpdateListingModal } from "@/components/modal/UpdateListingModal";
 
 export default function ManageListingsPage() {
   const dispatch = useAppDispatch();
@@ -29,6 +31,8 @@ export default function ManageListingsPage() {
   );
   const { data: session } = useSession();
   const token = session?.user?.token;
+  const [selectedListing, setSelectedListing] = useState<IListing | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const [currentPage, setCurrentPage] = useState(1);
   const listingsPerPage = 7;
@@ -51,7 +55,7 @@ export default function ManageListingsPage() {
       try {
         await dispatch(removeListing({ id, token })).unwrap();
         toast.success("Listing deleted successfully");
-        dispatch(fetchListings({})); 
+        dispatch(fetchListings({}));
       } catch (error) {
         console.log(error);
         toast.error("Failed to delete listing");
@@ -59,9 +63,24 @@ export default function ManageListingsPage() {
     }
   };
 
-  const handleEdit = (id: string) => {
-    if (token) {
-      updateListing({ id, token });
+  const handleEdit = (listing: IListing) => {
+    setSelectedListing(listing);
+    setIsModalOpen(true);
+  };
+
+  const handleSave = async (updatedData: Partial<IListing>) => {
+    if (token && selectedListing) {
+      try {
+        await dispatch(
+          updateListing({ id: selectedListing._id, token, data: updatedData })
+        ).unwrap();
+        toast.success("Listing updated successfully");
+        setIsModalOpen(false);
+        dispatch(fetchListings({}));
+      } catch (error) {
+        console.log(error);
+        toast.error("Failed to update listing");
+      }
     }
   };
 
@@ -106,7 +125,7 @@ export default function ManageListingsPage() {
                       <Button
                         size="icon"
                         variant="outline"
-                        onClick={() => handleEdit(listing._id)}
+                        onClick={() => handleEdit(listing)}
                         className="cursor-pointer"
                       >
                         <Pencil className="w-4 h-4" />
@@ -148,6 +167,16 @@ export default function ManageListingsPage() {
           </div>
         )}
       </div>
+
+      {/* Update Listing Modal */}
+      {selectedListing && (
+        <UpdateListingModal
+          listing={selectedListing}
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          onSave={handleSave}
+        />
+      )}
     </div>
   );
 }

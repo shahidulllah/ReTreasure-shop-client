@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { Search, MapPin, SlidersHorizontal } from "lucide-react";
 import ListingCard from "@/components/shared/ListingCard";
 import { Button } from "@/components/ui/button";
@@ -9,7 +9,16 @@ import { fetchListings } from "@/services/listingService";
 import { categories, locations } from "@/components/shared/listsOFArray";
 import { useRouter, useSearchParams } from "next/navigation";
 
-export default function ListingsPage() {
+// Wrap the ListingsPage component in a Suspense boundary
+export default function ListingsPageWrapper() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <ListingsPage />
+    </Suspense>
+  );
+}
+
+ export function ListingsPage() {
   const dispatch = useAppDispatch();
   const { listings, loading } = useAppSelector(
     (state: RootState) => state.listings

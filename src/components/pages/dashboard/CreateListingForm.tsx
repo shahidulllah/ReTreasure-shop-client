@@ -25,8 +25,6 @@ export default function CreateListingForm() {
   const token = session?.user?.token;
   const userId = session?.user?.id;
 
-  console.log("Session",session);
-
   const [form, setForm] = useState({
     title: "",
     description: "",

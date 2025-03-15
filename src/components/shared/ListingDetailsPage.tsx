@@ -20,8 +20,6 @@ const ListingDetails = () => {
     (state: RootState) => state.listings
   );
   const [seller, setSeller] = useState<IUser | null>(null);
-  const sellerId = listingDetails?.sellerId;
-  console.log("seller id:", sellerId);
 
   const id = Array.isArray(params.id) ? params.id[0] : params.id;
 
@@ -40,8 +38,6 @@ const ListingDetails = () => {
       });
     }
   }, [dispatch, id, token]);
-
-  console.log("seller:", seller);
 
   if (loading) return <p className="text-center">Loading...</p>;
   if (error) return <p className="text-red-500 text-center">{error}</p>;

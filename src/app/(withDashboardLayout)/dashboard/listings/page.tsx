@@ -23,6 +23,7 @@ import { useSession } from "next-auth/react";
 import { toast } from "sonner";
 import { IListing } from "@/types";
 import { UpdateListingModal } from "@/components/modal/UpdateListingModal";
+import { useRouter } from "next/navigation";
 
 export default function ManageListingsPage() {
   const dispatch = useAppDispatch();
@@ -33,6 +34,7 @@ export default function ManageListingsPage() {
   const token = session?.user?.token;
   const [selectedListing, setSelectedListing] = useState<IListing | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const router = useRouter()
 
   const [currentPage, setCurrentPage] = useState(1);
   const listingsPerPage = 7;
@@ -114,10 +116,11 @@ export default function ManageListingsPage() {
                         alt={listing.title}
                         width={50}
                         height={50}
-                        className="rounded-md border border-purple-400"
+                        className="rounded-md border border-purple-400 cursor-pointer"
+                        onClick={() => router.push(`/listings/${listing._id}`)}
                       />
                     </TableCell>
-                    <TableCell>{listing.title}</TableCell>
+                    <TableCell onClick={() => router.push(`/listings/${listing._id}`)} className="hover:underline cursor-pointer">{listing.title}</TableCell>
                     <TableCell>{listing.category}</TableCell>
                     <TableCell>${listing.price}</TableCell>
                     <TableCell>{listing.condition}</TableCell>

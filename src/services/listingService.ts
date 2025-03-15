@@ -36,6 +36,18 @@ export const fetchListings = createAsyncThunk(
   }
 );
 
+export const fetchListingDetails = createAsyncThunk(
+  "listings/fetchListingDetails",
+  async (id: string) => {
+    try {
+      const response = await axios.get(`${API_URL}/api/listings/${id}`);
+      return response.data.data;
+    } catch (error) {
+      throw error;
+    }
+  }
+);
+
 export const updateListing = createAsyncThunk(
   "listings/editListing",
   async ({ id, data, token }: any) => {

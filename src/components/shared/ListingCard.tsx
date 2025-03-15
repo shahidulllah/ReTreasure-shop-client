@@ -21,7 +21,7 @@ const ListingCard = ({ listing }: ListingCardProps) => {
   const router = useRouter();
   return (
     <div
-      className=" border border-purple-300 rounded-lg overflow-hidden hover:shadow-lg transition-shadow space-y-3 max-h-[370px]"
+      className=" border border-purple-300 rounded-lg overflow-hidden hover:shadow-lg transition-shadow space-y-3 max-h-[370px] cursor-pointer"
       onClick={() => router.push(`/listings/${listing._id}`)}
     >
       <div className="w-full h-48 relative">

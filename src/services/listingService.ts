@@ -4,6 +4,7 @@ import axios from "axios";
 
 const API_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
+
 // Create Listing
 export const createListing = async (data: any, token: string) => {
   try {
@@ -38,9 +39,14 @@ export const fetchListings = createAsyncThunk(
 
 export const fetchListingDetails = createAsyncThunk(
   "listings/fetchListingDetails",
-  async (id: string) => {
+  async ({ id, token }: { id: string; token: string }) => {
     try {
-      const response = await axios.get(`${API_URL}/api/listings/${id}`);
+      const response = await axios.get(`${API_URL}/api/listings/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      });
       return response.data.data;
     } catch (error) {
       throw error;
@@ -52,12 +58,16 @@ export const updateListing = createAsyncThunk(
   "listings/editListing",
   async ({ id, data, token }: any) => {
     try {
-      const response = await axios.patch(`${API_URL}/api/listings/${id}`, data, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-      });
+      const response = await axios.patch(
+        `${API_URL}/api/listings/${id}`,
+        data,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
       return response.data.data;
     } catch (error) {
       throw error;

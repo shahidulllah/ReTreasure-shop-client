@@ -33,7 +33,7 @@ export default function FeaturedListings() {
         {sortedListings.slice(0, 3).map((listing) => (
           <div
             key={listing._id}
-            className="rounded-lg shadow-lg overflow-hidden border"
+            className="rounded-lg shadow-lg overflow-hidden border cursor-pointer"
           >
             <div className="relative w-full h-48">
               <Image

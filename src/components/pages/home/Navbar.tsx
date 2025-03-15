@@ -15,12 +15,20 @@ import { Button } from "@/components/ui/button";
 import Profile from "@/components/shared/Profile";
 import SearchField from "@/components/shared/SearchField";
 import { categories } from "@/components/shared/listsOFArray";
+import { useRouter } from "next/navigation";
 
 const Navbar = () => {
   const [navbarOpen, setNavbarOpen] = useState(false);
   const [searchFieldOpen, setSearchFieldrOpen] = useState(false);
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
+
+  const router = useRouter();
+
+  const handleCategorySelect = (category: string) => {
+    router.push(`/listings?category=${encodeURIComponent(category)}`);
+    setNavbarOpen(false)
+  };
 
   useEffect(() => {
     setMounted(true);
@@ -115,11 +123,15 @@ const Navbar = () => {
         </div>
       )}
 
-      {/* Mobile Navigation Overlay */}
+      {/* Mobile category Navigation Overlay */}
       {navbarOpen && (
         <div className="absolute left-0 w-full bg-purple-200 text-black shadow-md rounded-b-md p-3">
           {categories.map((category, index) => (
-            <p key={index} className="p-2 hover:bg-gray-100 cursor-pointer">
+            <p
+              onClick={() => handleCategorySelect(category)}
+              key={index}
+              className="p-2 hover:bg-gray-100 cursor-pointer"
+            >
               {category}
             </p>
           ))}

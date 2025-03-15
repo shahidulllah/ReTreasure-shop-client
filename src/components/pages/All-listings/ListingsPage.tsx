@@ -1,6 +1,6 @@
 "use client";
 import { Suspense, useEffect, useState } from "react";
-import { Search, MapPin, SlidersHorizontal } from "lucide-react";
+import {MapPin, Search, SlidersHorizontal } from "lucide-react";
 import ListingCard from "@/components/shared/ListingCard";
 import { Button } from "@/components/ui/button";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
@@ -18,57 +18,30 @@ export default function ListingsPageWrapper() {
   );
 }
 
- export function ListingsPage() {
+export function ListingsPage() {
   const dispatch = useAppDispatch();
   const { listings, loading } = useAppSelector(
     (state: RootState) => state.listings
   );
 
   const searchParams = useSearchParams();
-  const router = useRouter(); 
-  const selectedCategory = searchParams.get("category") || "All Category"; 
+  const router = useRouter();
+  const selectedCategory = searchParams.get("category") || "All Category";
 
   const [showFilters, setShowFilters] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [location, setLocation] = useState("");
   const [priceRange, setPriceRange] = useState(15000);
-  const [locationSuggestions, setLocationSuggestions] = useState<string[]>([]);
-  const [showSuggestions, setShowSuggestions] = useState(false);
   const [selectedCondition, setSelectedCondition] = useState("");
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
 
-  const handleLocationFocus = () => {
-    setLocationSuggestions(locations);
-    setShowSuggestions(true);
+  // Handle location selection from dropdown
+  const handleLocationChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setLocation(e.target.value);
   };
 
-  // Handle location input change
-  const handleLocationChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    setLocation(value);
-
-    // Filter locations based on input
-    if (value) {
-      const filteredLocations = locations.filter((loc) =>
-        loc.toLowerCase().includes(value.toLowerCase())
-      );
-      setLocationSuggestions(filteredLocations);
-      setShowSuggestions(true);
-    } else {
-      setLocationSuggestions([]);
-      setShowSuggestions(false);
-    }
-  };
-
-  // Handle location selection from suggestions
-  const handleLocationSelect = (selectedLocation: string) => {
-    setLocation(selectedLocation);
-    setLocationSuggestions([]);
-    setShowSuggestions(false);
-  };
-
-  //Handle condition
+  // Handle condition selection
   const handleConditionSelect = (condition: string) => {
     setSelectedCondition(condition);
   };
@@ -78,10 +51,12 @@ export default function ListingsPageWrapper() {
     setPage((prevPage) => prevPage + 1);
   };
 
+  // Handle category selection
   const handleCategorySelect = (category: string) => {
     router.push(`/listings?category=${encodeURIComponent(category)}`);
   };
 
+  // Fetch listings based on filters
   useEffect(() => {
     const payload = {
       search: searchTerm,
@@ -108,28 +83,28 @@ export default function ListingsPageWrapper() {
     selectedCategory,
     priceRange,
     selectedCondition,
-    page
+    page,
   ]);
 
   return (
-    <div className="flex px-4 lg:max-w-7xl mx-auto my-8">
+    <div className="px-4 lg:max-w-7xl mx-auto my-8">
       <div className="flex-1 p-4">
         {/* Top Controls */}
-        <div className="flex justify-between items-center mb-6">
+        <div className="flex flex-col md:flex-row justify-between items-center mb-6 gap-4">
           {/* Filer button */}
           <button
             onClick={() => setShowFilters(!showFilters)}
             className={`${
               showFilters ? "bg-purple-300" : "bg-white"
-            } flex items-center gap-2 border border-purple-300 px-4 py-2 rounded-lg shadow-sm`}
+            } flex items-center gap-2 border border-purple-300 px-4 py-2 rounded-lg shadow-sm w-full md:w-auto`}
           >
             <SlidersHorizontal size={16} /> Filters
           </button>
 
           {/* Search, location */}
-          <div className="flex gap-2 w-full justify-center">
+          <div className="flex flex-col md:flex-row gap-4 w-full items-center justify-center">
             {/* Search */}
-            <div className="relative w-5/12">
+            <div className="relative w-full md:w-5/12">
               <Search
                 className="absolute left-2 top-3 text-gray-500"
                 size={16}
@@ -142,39 +117,29 @@ export default function ListingsPageWrapper() {
                 className="pl-8 pr-4 py-2 w-full border border-purple-300 rounded-lg"
               />
             </div>
-            {/* location */}
-            <div className="relative w-5/12">
-              <MapPin
+            {/* Location Dropdown */}
+            <div className="relative w-full md:w-5/12">
+            <MapPin
                 className="absolute left-2 top-3 text-gray-500"
                 size={16}
               />
-              <input
-                type="text"
-                placeholder="Location"
+              <select
                 value={location}
                 onChange={handleLocationChange}
-                onFocus={handleLocationFocus}
-                className="pl-8 pr-4 w-full py-2 border border-purple-300 rounded-lg"
-              />
-              {/* Location Suggestions Dropdown */}
-              {showSuggestions && locationSuggestions.length > 0 && (
-                <div className="absolute z-10 w-full bg-white border border-purple-300 rounded-lg mt-1 shadow-lg">
-                  {locationSuggestions.map((loc, index) => (
-                    <div
-                      key={index}
-                      className="px-4 py-2 hover:bg-purple-100 cursor-pointer"
-                      onClick={() => handleLocationSelect(loc)}
-                    >
-                      {loc}
-                    </div>
-                  ))}
-                </div>
-              )}
+                className="pl-8 pr-4 py-2 w-full text-gray-500 border border-purple-300 rounded-lg appearance-none bg-white"
+              >
+                <option value="" className="font-semibold"><></> Search by location</option>
+                {locations.map((loc, index) => (
+                  <option key={index} value={loc}>
+                    {loc}
+                  </option>
+                ))}
+              </select>
             </div>
           </div>
 
           {/* Filter with condition */}
-          <div className="flex gap-2 border border-purple-300 rounded-lg">
+          <div className="flex gap-2 border border-purple-300 rounded-lg w-full md:w-auto">
             <button
               onClick={() => handleConditionSelect("All")}
               className={`px-4 py-2 rounded-l-md ${
@@ -218,10 +183,10 @@ export default function ListingsPageWrapper() {
           </div>
         </div>
 
-        <div className="flex gap-5">
+        <div className="flex flex-col md:flex-row gap-5">
           {/* Sidebar Filters */}
           {showFilters && (
-            <div className="w-80 p-4 border h-[100%] border-purple-300 bg-purple-100 rounded-lg shadow-lg">
+            <div className="w-full md:w-80 p-4 border border-purple-300 bg-purple-100 rounded-lg shadow-lg">
               <h2 className="text-lg font-semibold mb-4">Filters</h2>
               <div className="mb-4">
                 <label className="font-medium">Price</label>
@@ -262,9 +227,9 @@ export default function ListingsPageWrapper() {
 
           {/* Listings Grid */}
           <div
-            className={`grid gap-4 w-full${
-              showFilters ? " grid-cols-3" : " grid-cols-4"
-            }`}
+            className={`grid gap-4 w-full ${
+              showFilters ? "md:grid-cols-2 lg:grid-cols-3" : "md:grid-cols-3 lg:grid-cols-4"
+            } grid-cols-1`}
           >
             {loading && page === 1 ? (
               <p className="text-center mt-12 text-black dark:text-white">

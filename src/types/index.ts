@@ -7,8 +7,17 @@ export interface IListing {
   location: string;
   category: string;
   image: string;
-  userId: string | undefined;
+  sellerId: string | undefined;
   createdAt: string;
+}
+
+export interface IUser {
+_id: string;
+name: string;
+image: string;
+email:string;
+phone:string;
+role: string;
 }
 
 export interface FetchListingsParams {

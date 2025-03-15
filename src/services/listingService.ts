@@ -20,7 +20,7 @@ export const createListing = async (data: any, token: string) => {
   }
 };
 
-//Fetch lisitn using redux
+//Fetch lisitng using redux
 export const fetchListings = createAsyncThunk(
   "listings/fetchListings",
   async (filters: Record<string, string | number>) => {

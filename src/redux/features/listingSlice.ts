@@ -3,11 +3,13 @@ import {
   updateListing,
   fetchListings,
   removeListing,
+  fetchListingDetails,
 } from "@/services/listingService";
 import { IListing } from "@/types";
 
 interface ListingState {
   listings: IListing[];
+  listingDetails: IListing | null;
   loading: boolean;
   status: string;
   error: string | null | undefined;
@@ -15,6 +17,7 @@ interface ListingState {
 
 const initialState: ListingState = {
   listings: [],
+  listingDetails: null,
   status: "idle",
   loading: false,
   error: null,
@@ -36,6 +39,20 @@ const listingSlice = createSlice({
       })
       .addCase(fetchListings.rejected, (state, action) => {
         state.status = "failed";
+        state.error = action.error.message;
+      })
+
+      // Fetch Listing Details
+      .addCase(fetchListingDetails.pending, (state) => {
+        state.loading = true;
+        state.listingDetails = null;
+      })
+      .addCase(fetchListingDetails.fulfilled, (state, action) => {
+        state.loading = false;
+        state.listingDetails = action.payload;
+      })
+      .addCase(fetchListingDetails.rejected, (state, action) => {
+        state.loading = false;
         state.error = action.error.message;
       })
 

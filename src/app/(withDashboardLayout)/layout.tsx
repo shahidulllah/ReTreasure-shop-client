@@ -15,6 +15,7 @@ import {
   CreditCard,
   Settings,
   Home,
+  WalletCards,
 } from "lucide-react";
 import Image from "next/image";
 import { signOut, useSession } from "next-auth/react";
@@ -25,12 +26,17 @@ const navItems = [
   { icon: LayoutGrid, label: "Overview", href: "/dashboard" },
   { icon: FilePlus, label: "Post Listing", href: "/dashboard/listing" },
   { icon: List, label: "Manage Listings", href: "/dashboard/listings" },
-  { icon: Heart, label: "Wishlist Feature", href: "/dashboard/wishlist" },
+  { icon: Heart, label: "Wishlist", href: "/dashboard/wishlist" },
   { icon: MessageCircle, label: "Message", href: "/dashboard/message" },
   {
     icon: CreditCard,
-    label: "Track Sales & Purchases",
+    label: "Sales History",
     href: "/dashboard/sales-history",
+  },
+  {
+    icon: WalletCards,
+    label: "Purchases History",
+    href: "/dashboard/purchase-history",
   },
   { icon: Settings, label: "Profile Management", href: "/dashboard/profile" },
   { icon: LogOut, label: "Logout", href: "#" },

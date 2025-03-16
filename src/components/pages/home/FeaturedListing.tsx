@@ -8,12 +8,14 @@ import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { useEffect } from "react";
 import { fetchListings } from "@/services/listingService";
 import { getTimeAgo } from "@/utils/getTime";
+import { useRouter } from "next/navigation";
 
 export default function FeaturedListings() {
   const dispatch = useAppDispatch();
   const { listings, loading } = useAppSelector(
     (state: RootState) => state.listings
   );
+  const router = useRouter();
 
   useEffect(() => {
     dispatch(fetchListings({}));
@@ -32,6 +34,7 @@ export default function FeaturedListings() {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
         {sortedListings.slice(0, 3).map((listing) => (
           <div
+            onClick={() => router.push(`/listings/${listing._id}`)}
             key={listing._id}
             className="rounded-lg shadow-lg overflow-hidden border cursor-pointer"
           >

@@ -1,18 +1,18 @@
 "use client";
 import { Box, Check, File, HeartCrack } from "lucide-react";
 import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+// import { useRouter } from "next/navigation";
+// import { useEffect } from "react";
 
 const Dashboard = () => {
   const { status } = useSession();
-  const router = useRouter();
+  // const router = useRouter();
 
-  useEffect(() => {
-    if (status === "unauthenticated") {
-      router.push("/auth/login");
-    }
-  }, [status, router]);
+  // useEffect(() => {
+  //   if (status === "unauthenticated") {
+  //     router.push("/auth/login");
+  //   }
+  // }, [status, router]);
 
   if (status === "loading") return <p className="text-center mt-12">Loading...</p>;
 

@@ -27,7 +27,7 @@ const Navbar = () => {
 
   const handleCategorySelect = (category: string) => {
     router.push(`/listings?category=${encodeURIComponent(category)}`);
-    setNavbarOpen(false)
+    setNavbarOpen(false);
   };
 
   useEffect(() => {
@@ -58,7 +58,9 @@ const Navbar = () => {
               <Moon className="h-5 w-5 text-gray-700" />
             )}
           </button>
-          <MessageCircleMore className="h-6 w-6" />
+          <Link href={"dashboard/messages"}>
+            <MessageCircleMore className="h-6 w-6" />
+          </Link>
 
           <Profile />
 
@@ -105,7 +107,9 @@ const Navbar = () => {
         />
 
         <div className="flex gap-2 items-center">
-          <MessageCircleMore className=" text-gray-300 h-6 w-6" />
+          <Link href={"dashboard/messages"}>
+            <MessageCircleMore className="h-6 w-6" />
+          </Link>
           <Profile />
 
           <Link href={"dashboard/listing"}>

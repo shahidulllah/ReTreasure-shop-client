@@ -7,21 +7,21 @@ import { X } from "lucide-react";
 const conversations = [
   {
     id: 1,
-    name: "John Doe",
+    name: "Shahidullah",
     lastMessage: "When can I pick it up?",
     time: "10:35 AM",
     avatar: "/default-avatar.png",
     messages: [
       {
         id: 1,
-        sender: "John Doe",
+        sender: "Ali Hossen",
         message: "Hey! Is this still available?",
         time: "10:30 AM",
       },
       { id: 2, sender: "You", message: "Yes, it is!", time: "10:32 AM" },
       {
         id: 3,
-        sender: "John Doe",
+        sender: "Ali Hossen",
         message: "Great! When can I pick it up?",
         time: "10:35 AM",
       },
@@ -29,14 +29,14 @@ const conversations = [
   },
   {
     id: 2,
-    name: "Alice Brown",
+    name: "Abdullah",
     lastMessage: "Thanks!",
     time: "Yesterday",
     avatar: "/default-avatar.png",
     messages: [
       {
         id: 1,
-        sender: "Alice Brown",
+        sender: "Abdullah",
         message: "Hey, I received it!",
         time: "Yesterday",
       },
@@ -46,7 +46,7 @@ const conversations = [
         message: "Awesome, glad you liked it!",
         time: "Yesterday",
       },
-      { id: 3, sender: "Alice Brown", message: "Thanks!", time: "Yesterday" },
+      { id: 3, sender: "Abdullah", message: "Thanks!", time: "Yesterday" },
     ],
   },
 ];

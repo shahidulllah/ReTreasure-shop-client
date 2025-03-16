@@ -43,14 +43,19 @@ export default function ManageListingsPage() {
     dispatch(fetchListings({}));
   }, [dispatch]);
 
+    // Sort latest listings
+    const sortedListings = [...listings].sort(
+      (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+    );
+
   // Pagination logic
   const indexOfLastListing = currentPage * listingsPerPage;
   const indexOfFirstListing = indexOfLastListing - listingsPerPage;
-  const currentListings = listings.slice(
+  const currentListings = sortedListings.slice(
     indexOfFirstListing,
     indexOfLastListing
   );
-  const totalPages = Math.ceil(listings.length / listingsPerPage);
+  const totalPages = Math.ceil(sortedListings.length / listingsPerPage);
 
   const handleDelete = async (id: string) => {
     if (token) {
@@ -89,7 +94,7 @@ export default function ManageListingsPage() {
   return (
     <div className="p-12">
       <h1 className="text-2xl lg:text-3xl font-semibold mb-4">
-        Manage Listings ({listings.length})
+        Manage Listings ({sortedListings.length})
       </h1>
       <div className="bg-gray-300 p-4 rounded-lg">
         {loading ? (

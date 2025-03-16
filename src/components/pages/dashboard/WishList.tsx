@@ -32,7 +32,7 @@ const Wishlist = () => {
           {wishlist.map((item) => (
             <div
               key={item.id}
-              className="border p-4 rounded-lg shadow-lg relative"
+              className="border p-4 bg-gray-100 rounded-lg shadow-lg relative"
             >
               <XCircle
                 size={20}

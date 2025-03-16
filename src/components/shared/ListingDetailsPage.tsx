@@ -7,14 +7,11 @@ import { useParams } from "next/navigation";
 import Image from "next/image";
 import { Layers, MapPin, Mail, MessageCircle } from "lucide-react";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import { useSession } from "next-auth/react";
 import { fetchSellerDetails } from "@/services/userService";
 import { IUser } from "@/types";
 
 const ListingDetails = () => {
   const params = useParams();
-  const { data: session } = useSession();
-  const token = session?.user?.token;
   const dispatch = useAppDispatch();
   const { listingDetails, loading, error } = useAppSelector(
     (state: RootState) => state.listings
@@ -25,19 +22,17 @@ const ListingDetails = () => {
 
   // Fetch listing details
   useEffect(() => {
-    if (id && token) {
-      dispatch(fetchListingDetails({ id, token })).then((action) => {
+    if (id) {
+      dispatch(fetchListingDetails({ id })).then((action) => {
         if (action.payload?.sellerId) {
           // Fetch seller details using sellerId
-          fetchSellerDetails(action.payload.sellerId, token).then(
-            (sellerData) => {
-              setSeller(sellerData);
-            }
-          );
+          fetchSellerDetails(action.payload.sellerId).then((sellerData) => {
+            setSeller(sellerData);
+          });
         }
       });
     }
-  }, [dispatch, id, token]);
+  }, [dispatch, id]);
 
   if (loading) return <p className="text-center">Loading...</p>;
   if (error) return <p className="text-red-500 text-center">{error}</p>;

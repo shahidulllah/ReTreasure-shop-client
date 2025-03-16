@@ -32,9 +32,10 @@ export default function ManageListingsPage() {
   );
   const { data: session } = useSession();
   const token = session?.user?.token;
+  const userId = session?.user?.id;
   const [selectedListing, setSelectedListing] = useState<IListing | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const router = useRouter()
+  const router = useRouter();
 
   const [currentPage, setCurrentPage] = useState(1);
   const listingsPerPage = 7;
@@ -43,10 +44,15 @@ export default function ManageListingsPage() {
     dispatch(fetchListings({}));
   }, [dispatch]);
 
-    // Sort latest listings
-    const sortedListings = [...listings].sort(
-      (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-    );
+  // Get the logged-in user's ID
+  const userFilteredListings = listings.filter(
+    (listing) => listing.sellerId === userId
+  );
+
+  // Sort latest listings
+  const sortedListings = [...userFilteredListings].sort(
+    (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+  );
 
   // Pagination logic
   const indexOfLastListing = currentPage * listingsPerPage;
@@ -125,7 +131,12 @@ export default function ManageListingsPage() {
                         onClick={() => router.push(`/listings/${listing._id}`)}
                       />
                     </TableCell>
-                    <TableCell onClick={() => router.push(`/listings/${listing._id}`)} className="hover:underline cursor-pointer">{listing.title}</TableCell>
+                    <TableCell
+                      onClick={() => router.push(`/listings/${listing._id}`)}
+                      className="hover:underline cursor-pointer"
+                    >
+                      {listing.title}
+                    </TableCell>
                     <TableCell>{listing.category}</TableCell>
                     <TableCell>${listing.price}</TableCell>
                     <TableCell>{listing.condition}</TableCell>

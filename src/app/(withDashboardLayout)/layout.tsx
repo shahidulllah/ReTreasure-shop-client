@@ -27,7 +27,7 @@ const navItems = [
   { icon: FilePlus, label: "Post Listing", href: "/dashboard/listing" },
   { icon: List, label: "Manage Listings", href: "/dashboard/listings" },
   { icon: Heart, label: "Wishlist", href: "/dashboard/wishlist" },
-  { icon: MessageCircle, label: "Message", href: "/dashboard/message" },
+  { icon: MessageCircle, label: "Message", href: "/dashboard/messages" },
   {
     icon: CreditCard,
     label: "Sales History",

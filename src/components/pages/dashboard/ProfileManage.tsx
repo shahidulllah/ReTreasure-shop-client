@@ -2,15 +2,12 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import { useSession } from "next-auth/react";
 
 const ProfileManagement = () => {
-  const [user, setUser] = useState({
-    name: "John Doe",
-    email: "johndoe@example.com",
-    phone: "+1234567890",
-    address: "123 Main St, City, Country",
-    profileImage: "/default-avatar.png",
-  });
+const {data: session} = useSession()
+const user = session?.user;
+console.log(user);
 
   const [editing, setEditing] = useState(false);
   const [updatedUser, setUpdatedUser] = useState(user);
@@ -33,16 +30,16 @@ const ProfileManagement = () => {
       <div className="mt-6 flex items-center space-x-8">
         <div className="relative w-24 h-24">
           <Image
-            src={user.profileImage}
+            src={user?.image}
             alt="Profile"
             fill
             className="rounded-full object-cover border-4 border-white shadow-md"
           />
         </div>
         <div>
-          <h2 className="text-2xl font-semibold text-gray-800">{user.name}</h2>
-          <p className="text-gray-600">{user.email}</p>
-          <p className="text-gray-600">{user.phone}</p>
+          <h2 className="text-2xl font-semibold text-gray-800">{user?.name}</h2>
+          <p className="text-gray-600">{user?.email}</p>
+          <p className="text-gray-600">{user?.phone}</p>
         </div>
       </div>
 

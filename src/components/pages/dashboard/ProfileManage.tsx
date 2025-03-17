@@ -5,20 +5,36 @@ import Image from "next/image";
 import { useSession } from "next-auth/react";
 
 const ProfileManagement = () => {
-const {data: session} = useSession()
-const user = session?.user;
-console.log(user);
+  const { data: session, update } = useSession();
+  const user = session?.user;
+  console.log(user);
 
   const [editing, setEditing] = useState(false);
-  const [updatedUser, setUpdatedUser] = useState(user);
+  const [updatedUser, setUpdatedUser] = useState({
+    name: user?.name,
+    email: user?.email,
+    image: user?.image,
+  });
+  console.log(updatedUser);
 
-  const handleChange = (e: { target: { name: string; value: string } }) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setUpdatedUser((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSave = () => {
-    setUser(updatedUser);
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setUpdatedUser((prev) => ({ ...prev, image: reader.result as string }));
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleSave = async () => {
+    await update(updatedUser);
     setEditing(false);
   };
 
@@ -30,20 +46,20 @@ console.log(user);
       <div className="mt-6 flex items-center space-x-8">
         <div className="relative w-24 h-24">
           <Image
-            src={user?.image}
+            src={updatedUser.image || "/default-avatar.png"}
             alt="Profile"
             fill
             className="rounded-full object-cover border-4 border-white shadow-md"
           />
         </div>
         <div>
-          <h2 className="text-2xl font-semibold text-gray-800">{user?.name}</h2>
-          <p className="text-gray-600">{user?.email}</p>
-          <p className="text-gray-600">{user?.phone}</p>
+          <h2 className="text-2xl font-semibold text-gray-800">
+            {updatedUser.name}
+          </h2>
+          <p className="text-gray-600">{updatedUser.email}</p>
         </div>
       </div>
 
-      {/* Edit Form */}
       {editing ? (
         <div className="mt-8 space-y-6">
           <div>
@@ -72,14 +88,13 @@ console.log(user);
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
-              Phone
+              Profile Image
             </label>
             <input
-              type="text"
-              name="phone"
-              value={updatedUser.phone}
-              onChange={handleChange}
-              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+              type="file"
+              accept="image/*"
+              onChange={handleImageUpload}
+              className="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
             />
           </div>
           <div className="flex justify-end space-x-4">

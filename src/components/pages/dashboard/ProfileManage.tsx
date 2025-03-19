@@ -3,18 +3,17 @@
 import { useState } from "react";
 import Image from "next/image";
 import { useSession } from "next-auth/react";
+import { IUser } from "@/types";
+import { updateProfile } from "@/services/userService";
+import { toast } from "sonner";
 
 const ProfileManagement = () => {
-  const { data: session, update } = useSession();
+  const { data: session } = useSession();
   const user = session?.user;
   console.log(user);
 
   const [editing, setEditing] = useState(false);
-  const [updatedUser, setUpdatedUser] = useState({
-    name: user?.name,
-    email: user?.email,
-    image: user?.image,
-  });
+  const [updatedUser, setUpdatedUser] = useState<Partial<IUser>>(user || {});
   console.log(updatedUser);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -22,20 +21,18 @@ const ProfileManagement = () => {
     setUpdatedUser((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setUpdatedUser((prev) => ({ ...prev, image: reader.result as string }));
-      };
-      reader.readAsDataURL(file);
-    }
-  };
 
   const handleSave = async () => {
-    await update(updatedUser);
-    setEditing(false);
+    if (user) {
+      try {
+        await updateProfile({ userId: user?.id, data: updatedUser });
+        toast.success("Profile updated successfully");
+        setEditing(false);
+      } catch (error) {
+        console.log(error);
+        toast.error("Failed to update profile");
+      }
+    }
   };
 
   return (
@@ -46,17 +43,15 @@ const ProfileManagement = () => {
       <div className="mt-6 flex items-center space-x-8">
         <div className="relative w-24 h-24">
           <Image
-            src={updatedUser.image || "/default-avatar.png"}
+            src={user?.image || "/default-avatar.png"}
             alt="Profile"
             fill
             className="rounded-full object-cover border-4 border-white shadow-md"
           />
         </div>
         <div>
-          <h2 className="text-2xl font-semibold text-gray-800">
-            {updatedUser.name}
-          </h2>
-          <p className="text-gray-600">{updatedUser.email}</p>
+          <h2 className="text-2xl font-semibold text-gray-800">{user?.name}</h2>
+          <p className="text-gray-600">{user?.email}</p>
         </div>
       </div>
 
@@ -69,7 +64,7 @@ const ProfileManagement = () => {
             <input
               type="text"
               name="name"
-              value={updatedUser.name}
+              value={updatedUser?.name}
               onChange={handleChange}
               className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
             />
@@ -81,7 +76,7 @@ const ProfileManagement = () => {
             <input
               type="email"
               name="email"
-              value={updatedUser.email}
+              value={user?.email}
               onChange={handleChange}
               className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
             />
@@ -91,9 +86,10 @@ const ProfileManagement = () => {
               Profile Image
             </label>
             <input
-              type="file"
-              accept="image/*"
-              onChange={handleImageUpload}
+              type="text"
+              name="image"
+              value={user?.image}
+              onChange={handleChange}
               className="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
             />
           </div>

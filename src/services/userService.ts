@@ -20,8 +20,8 @@ export const updateProfile = async ({ userId, data }: any) => {
       `${API_URL}/api/users/profile/${userId}`,
       data
     );
-
-    return response.data.user;
+    
+    return response.data.updatedUser;
   } catch (error) {
     console.log(error);
     throw error;

@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import { signOut, useSession } from "next-auth/react";
+import {useSession } from "next-auth/react";
 import { IUser } from "@/types";
 import { updateProfile } from "@/services/userService";
 import { toast } from "sonner";
@@ -41,11 +41,8 @@ const ProfileManagement = () => {
             ...updatedProfile,
           },
         });
-        toast.success("Profile updated successfully. Please login now...!");
+        toast.success("Profile updated successfully. Please login again...!");
         setEditing(false);
-        await signOut({
-          callbackUrl: "/dashboard/profile"
-        })
       } catch (error) {
         console.log(error);
         toast.error("Failed to update profile");

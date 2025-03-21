@@ -20,6 +20,8 @@ export const updateProfile = async ({ userId, data }: any) => {
       `${API_URL}/api/users/profile/${userId}`,
       data
     );
+
+    console.log("response: ",response.data.updatedUser);
     
     return response.data.updatedUser;
   } catch (error) {

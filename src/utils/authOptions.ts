@@ -40,6 +40,7 @@ export const authOptions: NextAuthOptions = {
       if (user) {
         token.role = user.role;
         token.id = user._id;
+        token.phone = user.phone;
         token.accessToken = user.token;
       }
       return token;
@@ -48,6 +49,7 @@ export const authOptions: NextAuthOptions = {
     async session({ session, token }) {
       session.user.role = token.role as string;
       session.user.id = token.id as string;
+      session.user.phone = token.phone as string;
       session.user.token = token.accessToken as string | undefined;
       return session;
     },

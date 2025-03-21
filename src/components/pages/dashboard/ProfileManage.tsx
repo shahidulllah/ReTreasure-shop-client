@@ -1,8 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
-import { useSession } from "next-auth/react";
+import {useSession } from "next-auth/react";
 import { IUser } from "@/types";
 import { updateProfile } from "@/services/userService";
 import { toast } from "sonner";
@@ -14,6 +14,11 @@ const ProfileManagement = () => {
   const [editing, setEditing] = useState(false);
   const [loading, setLoading] = useState(false);
   const [updatedUser, setUpdatedUser] = useState<Partial<IUser>>(user || {});
+  console.log(user);
+
+  useEffect(() => {
+    setUpdatedUser(user || {});
+  }, [user]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -24,15 +29,18 @@ const ProfileManagement = () => {
     if (user) {
       setLoading(true);
       try {
-        const updatedProfile = await updateProfile({ userId: user?.id, data: updatedUser });
-
-        // Update the session 
-        await update({
-          ...session,
-          user: { ...session?.user, ...updatedProfile },
+        const updatedProfile = await updateProfile({
+          userId: user?.id,
+          data: updatedUser,
         });
 
-        setUpdatedUser(updatedProfile);
+        await update({
+          ...session,
+          user: {
+            ...session?.user,
+            ...updatedProfile,
+          },
+        });
         toast.success("Profile updated successfully");
         setEditing(false);
       } catch (error) {
@@ -59,7 +67,9 @@ const ProfileManagement = () => {
           />
         </div>
         <div>
-          <h2 className="text-2xl font-semibold text-gray-800">{updatedUser?.name}</h2>
+          <h2 className="text-2xl font-semibold text-gray-800">
+            {updatedUser?.name}
+          </h2>
           <p className="text-gray-600">{updatedUser?.email}</p>
         </div>
       </div>

@@ -53,5 +53,11 @@ export const authOptions: NextAuthOptions = {
       session.user.token = token.accessToken as string | undefined;
       return session;
     },
+
+    async redirect({ url, baseUrl }) {
+      if (url.startsWith("/")) return `${baseUrl}${url}`;
+      else if (new URL(url).origin === baseUrl) return url;
+      return baseUrl;
+    },
   },
 };

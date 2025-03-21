@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { signIn } from "next-auth/react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -11,9 +11,13 @@ import { Eye, EyeOff } from "lucide-react";
 
 export function LoginPage() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const callbackUrl = searchParams.get("callbackUrl") || "/"; 
+
   const [form, setForm] = useState({ email: "", password: "" });
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false); 
+  
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -28,13 +32,14 @@ export function LoginPage() {
         email: form.email,
         password: form.password,
         redirect: false,
+        callbackUrl,
       });
 
       if (res?.error) {
         toast.error("Invalid email or password!");
       } else {
         toast.success("Logged in successfully!");
-        router.push("/dashboard");
+        router.push(callbackUrl);
       }
     } catch (error) {
       console.log(error);

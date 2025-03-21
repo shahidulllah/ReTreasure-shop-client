@@ -2,10 +2,11 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import {useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import { IUser } from "@/types";
 import { updateProfile } from "@/services/userService";
 import { toast } from "sonner";
+
 
 const ProfileManagement = () => {
   const { data: session, update } = useSession();
@@ -14,7 +15,6 @@ const ProfileManagement = () => {
   const [editing, setEditing] = useState(false);
   const [loading, setLoading] = useState(false);
   const [updatedUser, setUpdatedUser] = useState<Partial<IUser>>(user || {});
-  console.log(user);
 
   useEffect(() => {
     setUpdatedUser(user || {});
@@ -41,8 +41,11 @@ const ProfileManagement = () => {
             ...updatedProfile,
           },
         });
-        toast.success("Profile updated successfully");
+        toast.success("Profile updated successfully. Please login now...!");
         setEditing(false);
+        await signOut({
+          callbackUrl: "/dashboard/profile"
+        })
       } catch (error) {
         console.log(error);
         toast.error("Failed to update profile");
@@ -70,7 +73,8 @@ const ProfileManagement = () => {
           <h2 className="text-2xl font-semibold text-gray-800">
             {updatedUser?.name}
           </h2>
-          <p className="text-gray-600">{updatedUser?.email}</p>
+          <p className="text-gray-600">EMAIL: {updatedUser?.email}</p>
+          <p className="text-gray-600">PHONE: {updatedUser?.phone}</p>
         </div>
       </div>
 
@@ -90,6 +94,18 @@ const ProfileManagement = () => {
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
+              Phone
+            </label>
+            <input
+              type="tel"
+              name="phone"
+              value={updatedUser.phone || ""}
+              onChange={handleChange}
+              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
               Email
             </label>
             <input
@@ -97,7 +113,8 @@ const ProfileManagement = () => {
               name="email"
               value={updatedUser.email || ""}
               onChange={handleChange}
-              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+              disabled
+              className="w-full p-3 border cursor-not-allowed border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
             />
           </div>
           <div>

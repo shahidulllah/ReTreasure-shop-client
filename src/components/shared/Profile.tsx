@@ -1,3 +1,5 @@
+"use client"
+
 import { LogOut } from "lucide-react";
 import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
@@ -23,13 +25,12 @@ const Profile = () => {
         <div className="relative">
           <button
             onClick={() => setDropdownOpen(!dropdownOpen)}
-            className="flex items-center space-x-2"
+            className="flex items-center space-x-2 w-10 h-10 rounded-full border-2 overflow-hidden "
           >
             <Image
               src={session.user?.image || "https://ibb.co.com/KWD7nJQ"}
               alt="User"
-              width={35}
-              height={35}
+              layout="fill"
               className="rounded-full border border-gray-400"
               priority
             />

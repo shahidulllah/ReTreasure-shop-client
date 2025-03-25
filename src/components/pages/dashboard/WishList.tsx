@@ -1,28 +1,14 @@
-"use client"
-import { useState } from "react";
+"use client";
 import Image from "next/image";
 import Link from "next/link";
 import { XCircle } from "lucide-react";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { RootState } from "@/redux/store";
+import { removeFromWishlist } from "@/redux/features/wishListSlice";
 
 const Wishlist = () => {
-  const [wishlist, setWishlist] = useState([
-    {
-      id: 1,
-      title: "Smartphone XYZ",
-      price: "25,000৳",
-      imageUrl: "/smartphone.jpg",
-    },
-    {
-      id: 2,
-      title: "Gaming Laptop ABC",
-      price: "120,000৳",
-      imageUrl: "/laptop.jpg",
-    },
-  ]);
-
-  const removeFromWishlist = (id: number) => {
-    setWishlist(wishlist.filter((item) => item.id !== id));
-  };
+  const dispatch = useAppDispatch();
+  const wishlist = useAppSelector((state: RootState) => state.whisList.items);
 
   return (
     <div className="container mx-auto p-6">
@@ -31,16 +17,16 @@ const Wishlist = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {wishlist.map((item) => (
             <div
-              key={item.id}
+              key={item._id}
               className="border p-4 bg-gray-100 rounded-lg shadow-lg relative"
             >
               <XCircle
                 size={20}
                 className="absolute top-2 right-2 text-red-500 cursor-pointer"
-                onClick={() => removeFromWishlist(item.id)}
+                onClick={() => dispatch(removeFromWishlist(item._id))}
               />
               <Image
-                src={item.imageUrl}
+                src={item.image}
                 alt={item.title}
                 width={200}
                 height={150}
@@ -49,7 +35,7 @@ const Wishlist = () => {
               <h2 className="text-lg font-semibold mt-2">{item.title}</h2>
               <p className="text-gray-600">{item.price}</p>
               <Link
-                href={`/listings/${item.id}`}
+                href={`/listings/${item._id}`}
                 className="border border-purple-700 hover:bg-purple-300 text-purple-700 px-4 py-2 rounded-md block text-center mt-2"
               >
                 View Details

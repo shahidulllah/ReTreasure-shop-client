@@ -71,16 +71,15 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
         {/* Profile */}
         {user && (
           <div className="flex flex-col items-center py-4 border-b">
-            <div className="w-12 h-12 rounded-full border overflow-hidden">
+            <div className="w-12 h-12 overflow-hidden relative">
               <Image
                 src={
                   user?.image ||
                   "https://th.bing.com/th/id/OIP.8Wzkq9GNyaRz3xf4L_KMAQHaHa?rs=1&pid=ImgDetMain"
                 }
                 alt="Profile Picture"
-                width={64}
-                height={64}
-                className="object-cover"
+                layout="fill"
+                className="rounded-full border border-gray-400"
               />
             </div>
             <h2 className="text-lg font-bold">{user?.name}</h2>

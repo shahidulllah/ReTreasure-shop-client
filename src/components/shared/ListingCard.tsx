@@ -1,17 +1,9 @@
+import { IListing } from "@/types";
 import { getTimeAgo } from "@/utils/getTime";
 import { Layers, MapPin } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
-interface IListing {
-  _id: string;
-  image: string;
-  title: string;
-  price: number;
-  location: string;
-  category: string;
-  createdAt: string;
-}
 
 interface ListingCardProps {
   listing: IListing;

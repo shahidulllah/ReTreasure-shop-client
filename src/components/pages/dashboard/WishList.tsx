@@ -3,12 +3,13 @@ import Image from "next/image";
 import Link from "next/link";
 import { XCircle } from "lucide-react";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import { RootState } from "@/redux/store";
-import { removeFromWishlist } from "@/redux/features/wishListSlice";
+import { removeFromWishlist, selectWishlist } from "@/redux/features/wishListSlice";
 
 const Wishlist = () => {
   const dispatch = useAppDispatch();
-  const wishlist = useAppSelector((state: RootState) => state.whisList.items);
+  const wishlist = useAppSelector(selectWishlist);
+
+  console.log(wishlist);
 
   return (
     <div className="container mx-auto p-6">
@@ -21,8 +22,8 @@ const Wishlist = () => {
               className="border p-4 bg-gray-100 rounded-lg shadow-lg relative"
             >
               <XCircle
-                size={20}
-                className="absolute top-2 right-2 text-red-500 cursor-pointer"
+                size={24}
+                className="absolute top-3 right-2 text-red-500 cursor-pointer"
                 onClick={() => dispatch(removeFromWishlist(item._id))}
               />
               <Image

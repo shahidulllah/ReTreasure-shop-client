@@ -1,6 +1,6 @@
 import { IListing } from "@/types";
 import { getTimeAgo } from "@/utils/getTime";
-import { BookMarked, Layers, MapPin } from "lucide-react";
+import { Bookmark, Layers, MapPin } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
@@ -36,7 +36,7 @@ const ListingCard = ({ listing }: ListingCardProps) => {
         <p className="text-xs text-gray-400 mt-2">
           {getTimeAgo(listing.createdAt)}
         </p>
-        <BookMarked/>
+        <Bookmark/>
         </div>
       </div>
     </div>

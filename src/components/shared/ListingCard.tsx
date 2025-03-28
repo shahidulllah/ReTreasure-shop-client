@@ -1,6 +1,6 @@
 import { IListing } from "@/types";
 import { getTimeAgo } from "@/utils/getTime";
-import { Layers, MapPin } from "lucide-react";
+import { BookMarked, Layers, MapPin } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
@@ -32,9 +32,12 @@ const ListingCard = ({ listing }: ListingCardProps) => {
           <Layers size={16} className="mr-1" />
           <span>{listing.category}</span>
         </div>
+        <div className="flex justify-between">
         <p className="text-xs text-gray-400 mt-2">
           {getTimeAgo(listing.createdAt)}
         </p>
+        <BookMarked/>
+        </div>
       </div>
     </div>
   );

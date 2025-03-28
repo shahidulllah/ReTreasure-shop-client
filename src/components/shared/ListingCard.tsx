@@ -4,7 +4,6 @@ import { Bookmark, Layers, MapPin } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
-
 interface ListingCardProps {
   listing: IListing;
 }
@@ -12,11 +11,11 @@ interface ListingCardProps {
 const ListingCard = ({ listing }: ListingCardProps) => {
   const router = useRouter();
   return (
-    <div
-      className=" border border-purple-300 rounded-lg overflow-hidden hover:shadow-lg transition-shadow space-y-3 max-h-[370px] cursor-pointer"
-      onClick={() => router.push(`/listings/${listing._id}`)}
-    >
-      <div className="w-full h-48 relative">
+    <div className=" border border-purple-300 rounded-lg overflow-hidden hover:shadow-lg transition-shadow space-y-3 max-h-[370px]">
+      <div
+        onClick={() => router.push(`/listings/${listing._id}`)}
+        className="w-full h-48 relative cursor-pointer"
+      >
         <Image src={listing.image} alt={listing.title} layout="fill" priority />
       </div>
       <div className="p-4">
@@ -33,10 +32,10 @@ const ListingCard = ({ listing }: ListingCardProps) => {
           <span>{listing.category}</span>
         </div>
         <div className="flex justify-between">
-        <p className="text-xs text-gray-400 mt-2">
-          {getTimeAgo(listing.createdAt)}
-        </p>
-        <Bookmark/>
+          <p className="text-xs text-gray-400 mt-2">
+            {getTimeAgo(listing.createdAt)}
+          </p>
+          <Bookmark className="cursor-pointer" />
         </div>
       </div>
     </div>

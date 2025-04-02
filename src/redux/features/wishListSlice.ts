@@ -1,5 +1,7 @@
+import { createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../store";
 import { IListing } from "@/types";
+import { addToWishlist, fetchWishlist, removeFromWishlist } from "@/services/wishlistServices";
 
 interface WishlistState {
   listings: IListing[];
@@ -17,10 +19,33 @@ const wishlistSlice = createSlice({
   name: "wishlist",
   initialState,
   reducers: {},
+  extraReducers: (builder) => {
+    builder
+    //Fetch wishlist
+      .addCase(fetchWishlist.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(fetchWishlist.fulfilled, (state, action) => {
+        state.loading = false;
+        state.listings = action.payload;
+      })
+      .addCase(fetchWishlist.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+      })
+
+      //Fetch wishlist
+      .addCase(addToWishlist.fulfilled, (state, action) => {
+        state.listings = action.payload;
+      })
+
+      //Remove wishlist
+      .addCase(removeFromWishlist.fulfilled, (state, action) => {
+        state.listings = action.payload;
+      });
+  },
 });
 
-export const { addToWishlist, removeFromWishlist, clearWishlist } =
-  wishlistSlice.actions;
-export const selectWishlist = (state: RootState) => state.whisList.items;
+export const selectWishlist = (state: RootState) => state.whisList;
 
 export default wishlistSlice.reducer;

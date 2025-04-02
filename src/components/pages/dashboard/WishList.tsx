@@ -3,20 +3,46 @@ import Image from "next/image";
 import Link from "next/link";
 import { XCircle } from "lucide-react";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import { removeFromWishlist, selectWishlist } from "@/redux/features/wishListSlice";
+import { selectWishlist } from "@/redux/features/wishListSlice";
+import { fetchWishlist, removeFromWishlist } from "@/services/wishlistServices";
+import { useSession } from "next-auth/react";
+import { useEffect } from "react";
 
 const Wishlist = () => {
   const dispatch = useAppDispatch();
-  const wishlist = useAppSelector(selectWishlist);
+  const {
+    listings: wishlists,
+    loading,
+    error,
+  } = useAppSelector(selectWishlist);
+  const { data: session, status } = useSession();
+  const userId = session?.user?.id;
 
-  console.log(wishlist);
+  console.log("wishlist:", wishlists);
+
+  useEffect(() => {
+    if (userId) {
+      dispatch(fetchWishlist(userId));
+    }
+  }, [dispatch, userId]);
+
+  // Loading & Error Handling
+  if (status === "loading")
+    return <p className="text-center mt-12">Loading session...</p>;
+  if (!userId)
+    return (
+      <p className="text-center mt-12">User ID not found. Please log in.</p>
+    );
+
+  if (loading) return <p className="text-center mt-12">Fetching wishlist...</p>;
+  if (error) return <p className="text-red-500 text-center mt-12">{error}</p>;
 
   return (
     <div className="container mx-auto p-6">
       <h1 className="text-2xl font-bold mb-4">Your Wishlist</h1>
-      {wishlist.length > 0 ? (
+      {wishlists.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {wishlist.map((item) => (
+          {wishlists.map((item) => (
             <div
               key={item._id}
               className="border p-4 bg-gray-100 rounded-lg shadow-lg relative"
@@ -24,7 +50,9 @@ const Wishlist = () => {
               <XCircle
                 size={24}
                 className="absolute top-3 right-2 text-red-500 cursor-pointer"
-                onClick={() => dispatch(removeFromWishlist(item._id))}
+                onClick={() =>
+                  dispatch(removeFromWishlist({ userId, listingId: item._id }))
+                }
               />
               <Image
                 src={item.image}

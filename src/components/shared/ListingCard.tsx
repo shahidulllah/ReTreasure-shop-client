@@ -1,12 +1,12 @@
-import {
-  addToWishlist,
-  removeFromWishlist,
-  selectWishlist,
-} from "@/redux/features/wishListSlice";
+"use client";
+
+import { selectWishlist } from "@/redux/features/wishListSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { addToWishlist, removeFromWishlist } from "@/services/wishlistServices";
 import { IListing } from "@/types";
 import { getTimeAgo } from "@/utils/getTime";
 import { Bookmark, Layers, MapPin } from "lucide-react";
+import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
@@ -18,17 +18,33 @@ interface ListingCardProps {
 const ListingCard = ({ listing }: ListingCardProps) => {
   const router = useRouter();
   const dispatch = useAppDispatch();
-  const wishlist = useAppSelector(selectWishlist);
+  const { listings: wishlist } = useAppSelector(selectWishlist);
+  const { data: session, status } = useSession();
+  const userId = session?.user?.id;
+
+  // Loading & Error Handling
+  if (status === "loading")
+    return <p className="text-center mt-12">Loading session...</p>;
+  if (!userId)
+    return (
+      <p className="text-center mt-12">User ID not found. Please log in.</p>
+    );
 
   //check wish item is already added
   const isInWishlist = wishlist.some((item) => item._id === listing._id);
 
   const handleWishlistToggle = () => {
+    if (!userId) {
+      toast.error("You need to log in first!");
+      return;
+    }
+
     if (isInWishlist) {
-      dispatch(removeFromWishlist(listing._id));
+      dispatch(removeFromWishlist({ userId, listingId: listing._id }));
+      toast.success("Removed from wishlist.");
     } else {
-      dispatch(addToWishlist(listing));
-      toast.success('Saved successfully..!')
+      dispatch(addToWishlist({ userId, listingId: listing._id }));
+      toast.success("Saved successfully..!");
     }
   };
   return (

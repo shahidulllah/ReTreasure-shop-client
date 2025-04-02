@@ -13,7 +13,7 @@ import { Bookmark, Layers, MapPin } from "lucide-react";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect} from "react";
 import { toast } from "sonner";
 
 interface ListingCardProps {
@@ -44,20 +44,21 @@ const ListingCard = ({ listing }: ListingCardProps) => {
   //check wish item is already added
   const isInWishlist = wishlist?.some((item) => item._id === listing._id);
 
-  const handleWishlistToggle = (listingId: string) => {
+  const handleWishlistToggle = async (listingId: string) => {
     if (!userId) {
       toast.error("You need to log in first!");
       return;
     }
 
     if (isInWishlist) {
-      dispatch(removeFromWishlist({ userId, listingId }));
+      await dispatch(removeFromWishlist({ userId, listingId }));
       toast.success("Removed from wishlist.");
     } else {
-      dispatch(addToWishlist({ userId, listingId }));
-      dispatch(fetchWishlist(userId));
+      await dispatch(addToWishlist({ userId, listingId }));
       toast.success("Saved successfully..!");
     }
+
+    dispatch(fetchWishlist(userId));
   };
   return (
     <div className=" border border-purple-300 rounded-lg overflow-hidden hover:shadow-lg transition-shadow space-y-3 max-h-[370px]">

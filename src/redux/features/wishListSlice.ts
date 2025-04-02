@@ -37,11 +37,13 @@ const wishlistSlice = createSlice({
       //Fetch wishlist
       .addCase(addToWishlist.fulfilled, (state, action) => {
         state.listings = action.payload;
+        state.loading = false;
       })
 
       //Remove wishlist
       .addCase(removeFromWishlist.fulfilled, (state, action) => {
         state.listings = action.payload;
+        state.loading = false;
       });
   },
 });

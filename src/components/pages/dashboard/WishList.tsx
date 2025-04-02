@@ -7,6 +7,7 @@ import { selectWishlist } from "@/redux/features/wishListSlice";
 import { fetchWishlist, removeFromWishlist } from "@/services/wishlistServices";
 import { useSession } from "next-auth/react";
 import { useEffect } from "react";
+import { toast } from "sonner";
 
 const Wishlist = () => {
   const dispatch = useAppDispatch();
@@ -18,17 +19,31 @@ const Wishlist = () => {
   const { data: session, status } = useSession();
   const userId = session?.user?.id;
 
-  console.log("wishlist:", wishlists);
-
   useEffect(() => {
     if (userId) {
       dispatch(fetchWishlist(userId));
     }
   }, [dispatch, userId]);
 
+  //Handle Remove
+  const handleRemove = async (listingId: string) => {
+    if (!userId) {
+      toast.error("Please login to modify your wishlist");
+      return;
+    }
+
+    try {
+      await dispatch(removeFromWishlist({ userId, listingId }));
+      toast.success("Item removed from wishlist");
+    } catch (error) {
+      toast.error("Failed to remove item");
+      console.error("Error removing from wishlist:", error);
+    }
+  };
+
   // Loading & Error Handling
   if (status === "loading")
-    return <p className="text-center mt-12">Loading session...</p>;
+    return <p className="text-center mt-12">Loading...</p>;
   if (!userId)
     return (
       <p className="text-center mt-12">User ID not found. Please log in.</p>
@@ -40,7 +55,7 @@ const Wishlist = () => {
   return (
     <div className="container mx-auto p-6">
       <h1 className="text-2xl font-bold mb-4">Your Wishlist</h1>
-      {wishlists.length > 0 ? (
+      {wishlists?.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {wishlists.map((item) => (
             <div
@@ -50,9 +65,7 @@ const Wishlist = () => {
               <XCircle
                 size={24}
                 className="absolute top-3 right-2 text-red-500 cursor-pointer"
-                onClick={() =>
-                  dispatch(removeFromWishlist({ userId, listingId: item._id }))
-                }
+                onClick={() => handleRemove(item._id)}
               />
               <Image
                 src={item.image}

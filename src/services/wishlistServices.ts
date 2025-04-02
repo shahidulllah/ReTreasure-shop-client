@@ -16,7 +16,7 @@ export const addToWishlist = createAsyncThunk(
         userId,
         listingId,
       });
-      console.log("Add response:", response.data);
+
       return response.data.listings;
     } catch (error: any) {
       return rejectWithValue(
@@ -52,7 +52,7 @@ export const removeFromWishlist = createAsyncThunk(
         userId,
         listingId,
       });
-      console.log("remove response:", response.data.updatedWishlist.listings);
+      
       return response.data.updatedWishlist.listings;
     } catch (error: any) {
       return rejectWithValue(

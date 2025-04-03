@@ -163,7 +163,7 @@ export default function CreateListingForm() {
                     <SelectValue placeholder="Select Category" />
                   </SelectTrigger>
                   <SelectContent>
-                  {categories.map((category, index) => (
+                    {categories.map((category, index) => (
                       <SelectItem key={index} value={category}>
                         {category}
                       </SelectItem>

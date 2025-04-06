@@ -7,17 +7,16 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { toast } from "sonner";
-import { Eye, EyeOff } from "lucide-react"; 
+import { Eye, EyeOff } from "lucide-react";
 
 export function LoginPage() {
   const [form, setForm] = useState({ email: "", password: "" });
   const [loading, setLoading] = useState(false);
-  const [showPassword, setShowPassword] = useState(false); 
-  
+  const [showPassword, setShowPassword] = useState(false);
+
   const router = useRouter();
   const searchParams = useSearchParams();
-  const callbackUrl = searchParams.get("callbackUrl") || "/"; 
-
+  const callbackUrl = searchParams.get("callbackUrl") || "/";
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -92,7 +91,7 @@ export function LoginPage() {
               {loading ? "Processing..." : "LOGIN"}
             </Button>
           </form>
-          
+
           <div className="mt-4 text-center">
             <p className="text-sm text-gray-600">
               Do not have an account? {""}

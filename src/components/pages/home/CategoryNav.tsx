@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { categories } from "@/components/shared/listsOFArray";
 import { ArrowRight, SlidersHorizontal } from "lucide-react";

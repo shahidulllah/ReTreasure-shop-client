@@ -7,7 +7,6 @@ import { IUser } from "@/types";
 import { updateProfile } from "@/services/userService";
 import { toast } from "sonner";
 
-
 const ProfileManagement = () => {
   const { data: session, update } = useSession();
   const user = session?.user;
@@ -44,8 +43,8 @@ const ProfileManagement = () => {
         toast.success("Profile updated successfully. Please login now...!");
         setEditing(false);
         await signOut({
-          callbackUrl: "/dashboard/profile"
-        })
+          callbackUrl: "/dashboard/profile",
+        });
       } catch (error) {
         console.log(error);
         toast.error("Failed to update profile");

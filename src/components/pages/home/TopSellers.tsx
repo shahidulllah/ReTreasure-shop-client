@@ -53,7 +53,7 @@ const TopSellers = () => {
                   src={seller.avatar}
                   alt={seller.name}
                   fill
-                  className="rounded-full object-cover border"
+                  className="rounded-full object-cover border-2"
                 />
               </div>
               <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-100">

@@ -30,7 +30,9 @@ export default function FeaturedListings() {
 
   return (
     <div className="lg:max-w-7xl mx-auto my-10 px-4">
-      <h2 className="text-3xl text-black dark:text-white font-bold mb-6 text-center">Featured Listings</h2>
+      <h2 className="text-3xl text-black dark:text-white font-bold mb-6 text-center">
+        Featured Listings
+      </h2>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
         {sortedListings.slice(0, 3).map((listing) => (
           <div

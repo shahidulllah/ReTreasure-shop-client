@@ -36,10 +36,6 @@ const ListingCard = ({ listing }: ListingCardProps) => {
   // Loading & Error Handling
   if (status === "loading")
     return <p className="text-center mt-12">Loading...</p>;
-  if (!userId)
-    return (
-      <p className="text-center mt-12">User ID not found. Please log in.</p>
-    );
 
   //check wish item is already added
   const isInWishlist = wishlist?.some((item) => item._id === listing._id);

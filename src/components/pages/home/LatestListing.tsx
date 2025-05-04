@@ -28,7 +28,7 @@ const LatestListings = () => {
 
   return (
     <div className="px-4 rounded-lg lg:max-w-7xl mx-auto my-20">
-      <h1 className="text-3xl font-bold text-purple-800 dark:text-purple-300 mb-6 text-center">Latest Listings</h1>
+      <h1 className="text-3xl font-bold text-black dark:text-white mb-6 text-center">Latest Listings</h1>
       <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {sortedListings.slice(0, 8).map((listing) => (
           <ListingCard key={listing._id} listing={listing} />

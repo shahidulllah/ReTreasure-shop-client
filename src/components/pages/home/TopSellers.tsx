@@ -15,21 +15,21 @@ const topSellers: Seller[] = [
   {
     id: "1",
     name: "Amina Rahman",
-    avatar: "/avatars/user1.jpg",
+    avatar: "https://i.ibb.co.com/1TWjy8W/team1.jpg",
     totalSales: 52,
     rating: 4.8,
   },
   {
     id: "2",
     name: "Niaz Ahmed",
-    avatar: "/avatars/user2.jpg",
+    avatar: "https://i.ibb.co.com/7rSY3pn/team4.jpg",
     totalSales: 45,
     rating: 4.6,
   },
   {
     id: "3",
     name: "Sadia Hasan",
-    avatar: "/avatars/user3.jpg",
+    avatar: "https://i.ibb.co.com/1TWjy8W/team1.jpg",
     totalSales: 38,
     rating: 4.9,
   },
@@ -39,7 +39,7 @@ const TopSellers = () => {
   return (
     <section className="py-12 bg-gray-100 dark:bg-gray-700 transition-colors duration-300">
       <div className="max-w-6xl mx-auto px-4">
-        <h2 className="text-3xl text-purple-800 dark:text-purple-300 font-bold mb-8 text-center ">
+        <h2 className="text-3xl text-black dark:text-white font-bold mb-8 text-center ">
           Top Sellers
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">

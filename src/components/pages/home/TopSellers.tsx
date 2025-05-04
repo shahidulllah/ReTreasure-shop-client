@@ -39,7 +39,7 @@ const TopSellers = () => {
   return (
     <section className="py-12 bg-gray-100 dark:bg-gray-700 transition-colors duration-300">
       <div className="max-w-6xl mx-auto px-4">
-        <h2 className="text-2xl md:text-3xl font-bold mb-8 text-center text-black dark:text-white">
+        <h2 className="text-3xl md:text-4xl font-bold mb-8 text-center text-black dark:text-white">
           Top Sellers
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">

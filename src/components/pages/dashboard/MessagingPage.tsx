@@ -29,7 +29,7 @@ const conversations = [
   },
   {
     id: 2,
-    name: "Abdullah",
+    name: "Abdullah Ali Hossain",
     lastMessage: "Thanks!",
     time: "Yesterday",
     avatar: "/default-avatar.png",

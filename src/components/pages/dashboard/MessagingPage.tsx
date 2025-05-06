@@ -43,7 +43,7 @@ const conversations = [
       {
         id: 2,
         sender: "You",
-        message: "Awesome, glad you liked it!",
+        message: "Awesome, glad you liked it! How about your skills journey",
         time: "Yesterday",
       },
       { id: 3, sender: "Abdullah", message: "Thanks!", time: "Yesterday" },

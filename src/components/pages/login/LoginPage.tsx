@@ -48,11 +48,43 @@ export function LoginPage() {
     }
   };
 
+  const autofillUser = () => {
+    setForm({
+      email: "mdshahidsumon177@gmail.com",
+      password: "12345",
+    });
+  };
+
+  const autofillAdmin = () => {
+    setForm({
+      email: "mdshahidsumon178@gmail.com",
+      password: "12345",
+    });
+  };
+
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
       <Card className="w-full max-w-md p-6 shadow-lg">
         <CardHeader className="text-center">
           <CardTitle className="text-2xl font-bold">Login</CardTitle>
+           {/* Credential Buttons */}
+      <div className="flex gap-4  mt-4">
+        <button
+          onClick={autofillUser}
+          type="button"
+          className="px-4 py-1 bg-blue-500 text-white rounded-full hover:bg-blue-600 text-sm transition-all"
+        >
+          Use User Credential
+        </button>
+        <button
+          onClick={autofillAdmin}
+          type="button"
+          disabled
+          className="px-4 py-1 cursor-not-allowed bg-purple-500 text-white rounded-full hover:bg-purple-600 text-sm transition-all"
+        >
+          Use Admin Credential
+        </button>
+      </div>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-6">
@@ -60,6 +92,7 @@ export function LoginPage() {
               <Input
                 type="email"
                 name="email"
+                value={form.email}
                 placeholder="Email"
                 onChange={handleChange}
                 required
@@ -70,6 +103,7 @@ export function LoginPage() {
                   type={showPassword ? "text" : "password"}
                   name="password"
                   placeholder="Password"
+                  value={form.password}
                   onChange={handleChange}
                   required
                   className="w-full p-3 border border-gray-300 rounded-full pr-10"

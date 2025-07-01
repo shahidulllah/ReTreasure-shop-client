@@ -34,6 +34,7 @@ export const locations = [
   "Manikganj",
   "Faridpur",
   "Kushtia",
+  "Jamalpur",
   "Satkhira",
   "Tangail",
 ];

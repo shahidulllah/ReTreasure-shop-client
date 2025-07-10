@@ -1,6 +1,6 @@
 "use client";
 import { Suspense, useEffect, useState } from "react";
-import {MapPin, Search, SlidersHorizontal } from "lucide-react";
+import { MapPin, Search, SlidersHorizontal } from "lucide-react";
 import ListingCard from "@/components/shared/ListingCard";
 import { Button } from "@/components/ui/button";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
@@ -95,8 +95,8 @@ export function ListingsPage() {
           <button
             onClick={() => setShowFilters(!showFilters)}
             className={`${
-              showFilters ? "bg-purple-300" : "bg-white"
-            } flex items-center gap-2 border border-purple-300 px-4 py-2 rounded-lg shadow-sm w-full md:w-auto`}
+              showFilters ? "" : ""
+            } flex items-center gap-2 border border-purple-300 dark:text-white px-4 py-2 rounded-lg shadow-sm w-full md:w-auto`}
           >
             <SlidersHorizontal size={16} /> Filters
           </button>
@@ -119,16 +119,18 @@ export function ListingsPage() {
             </div>
             {/* Location Dropdown */}
             <div className="relative w-full md:w-5/12">
-            <MapPin
+              <MapPin
                 className="absolute left-2 top-3 text-gray-500"
                 size={16}
               />
               <select
                 value={location}
                 onChange={handleLocationChange}
-                className="pl-8 pr-4 py-2 w-full text-gray-500 border border-purple-300 rounded-lg appearance-none bg-white"
+                className="pl-8 pr-4 py-2 w-full text-gray-500 border border-purple-300 rounded-lg appearance-none"
               >
-                <option value="" className="font-semibold"><></> Search by location</option>
+                <option value="" className="font-semibold">
+                  <></> Search by location
+                </option>
                 {locations.map((loc, index) => (
                   <option key={index} value={loc}>
                     {loc}
@@ -145,7 +147,7 @@ export function ListingsPage() {
               className={`px-4 py-2 rounded-l-md ${
                 selectedCondition === "All"
                   ? "border-b-purple-600 border-b-3 text-black"
-                  : "bg-white hover:bg-purple-100"
+                  : "hover:bg-purple-100 hover:text-black"
               } cursor-pointer`}
             >
               All
@@ -155,7 +157,7 @@ export function ListingsPage() {
               className={`px-4 py-2 ${
                 selectedCondition === "New"
                   ? "border-b-purple-600 border-b-3 text-black"
-                  : "bg-white hover:bg-purple-100"
+                  : "hover:bg-purple-100 hover:text-black"
               } cursor-pointer`}
             >
               New
@@ -165,7 +167,7 @@ export function ListingsPage() {
               className={`px-4 py-2 ${
                 selectedCondition === "Used"
                   ? "border-b-purple-600 border-b-3 text-black"
-                  : "bg-white hover:bg-purple-100"
+                  : "hover:bg-purple-100 hover:text-black"
               } cursor-pointer`}
             >
               Used
@@ -175,7 +177,7 @@ export function ListingsPage() {
               className={`px-4 py-2 rounded-r-md ${
                 selectedCondition === "Repaired"
                   ? "border-b-purple-600 border-b-3 text-black"
-                  : "bg-white hover:bg-purple-100"
+                  : "hover:bg-purple-100 hover:text-black"
               } cursor-pointer`}
             >
               Repaired
@@ -186,7 +188,7 @@ export function ListingsPage() {
         <div className="flex flex-col md:flex-row gap-5">
           {/* Sidebar Filters */}
           {showFilters && (
-            <div className="w-full md:w-80 p-4 border border-purple-300 bg-purple-100 rounded-lg shadow-lg">
+            <div className="w-full md:w-80 p-4 border border-purple-300 rounded-lg shadow-lg">
               <h2 className="text-lg font-semibold mb-4">Filters</h2>
               <div className="mb-4">
                 <label className="font-medium">Price</label>
@@ -198,7 +200,7 @@ export function ListingsPage() {
                   min="0"
                   max="15000"
                 />
-                <p className="text-md text-gray-800 font-semibold">
+                <p className="text-md text-gray-800 dark:text-white font-semibold">
                   <span className="font-extrabold">৳ </span>0 -{" "}
                   <span className="font-extrabold">৳ </span>
                   {priceRange.toLocaleString()}
@@ -228,7 +230,9 @@ export function ListingsPage() {
           {/* Listings Grid */}
           <div
             className={`grid gap-4 w-full ${
-              showFilters ? "md:grid-cols-2 lg:grid-cols-3" : "md:grid-cols-3 lg:grid-cols-4"
+              showFilters
+                ? "md:grid-cols-2 lg:grid-cols-3"
+                : "md:grid-cols-3 lg:grid-cols-4"
             } grid-cols-1`}
           >
             {loading && page === 1 ? (

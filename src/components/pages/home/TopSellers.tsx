@@ -2,6 +2,9 @@
 
 import Image from "next/image";
 import { Star } from "lucide-react";
+import { motion, Variants, useAnimation } from "framer-motion";
+import { useInView } from "react-intersection-observer";
+import React, { useEffect } from "react";
 
 interface Seller {
   id: string;
@@ -35,18 +38,64 @@ const topSellers: Seller[] = [
   },
 ];
 
+const containerVariants: Variants = {
+  hidden: {},
+  visible: {
+    transition: {
+      staggerChildren: 0.15,
+    },
+  },
+};
+
+const cardVariants: Variants = {
+  hidden: { opacity: 0, y: 30 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.5, ease: "easeOut" },
+  },
+};
+
+const headingVariants: Variants = {
+  hidden: { opacity: 0, y: -20 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: "easeOut" } },
+};
+
 const TopSellers = () => {
+  const controls = useAnimation();
+  const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.2 });
+
+  useEffect(() => {
+    if (inView) controls.start("visible");
+  }, [controls, inView]);
+
   return (
-    <section className="py-12 bg-gray-100 dark:bg-gray-700 transition-colors duration-300">
+    <motion.section
+      ref={ref}
+      initial="hidden"
+      animate={controls}
+      className="py-12 bg-gray-100 dark:bg-gray-700 transition-colors duration-300"
+    >
       <div className="max-w-6xl mx-auto px-4">
-        <h2 className="text-3xl text-black dark:text-white font-bold mb-8 text-center ">
+        <motion.h2
+          className="text-3xl text-black dark:text-white font-bold mb-8 text-center"
+          variants={headingVariants}
+        >
           Top Sellers
-        </h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+        </motion.h2>
+        <motion.div
+          className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6"
+          variants={containerVariants}
+          initial="hidden"
+          animate={controls}
+        >
           {topSellers.map((seller) => (
-            <div
+            <motion.div
               key={seller.id}
-              className="bg-white dark:bg-gray-800 rounded-2xl shadow p-6 flex flex-col items-center text-center border border-purple-100 dark:border-gray-700 hover:shadow-md dark:hover:shadow-lg transition"
+              variants={cardVariants}
+              whileHover={{ scale: 1.05 }}
+              transition={{ type: "spring", stiffness: 300, damping: 20 }}
+              className="bg-white dark:bg-gray-800 rounded-2xl shadow p-6 flex flex-col items-center text-center border border-purple-100 dark:border-gray-700 hover:shadow-md dark:hover:shadow-lg cursor-pointer transition"
             >
               <div className="w-20 h-20 relative mb-4">
                 <Image
@@ -68,11 +117,11 @@ const TopSellers = () => {
                   {seller.rating}
                 </span>
               </div>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
-    </section>
+    </motion.section>
   );
 };
 

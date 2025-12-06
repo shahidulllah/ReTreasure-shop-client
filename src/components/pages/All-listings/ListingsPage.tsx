@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { RootState } from "@/redux/store";
 import { fetchListings } from "@/services/listingService";
-import { categories, locations } from "@/components/shared/listsOFArray";
+import { categories, locations } from "@/components/shared/listsOfArray";
 import { useRouter, useSearchParams } from "next/navigation";
 
 // Wrap the ListingsPage component in a Suspense boundary

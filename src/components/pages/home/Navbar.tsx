@@ -14,7 +14,7 @@ import { useTheme } from "next-themes";
 import { Button } from "@/components/ui/button";
 import Profile from "@/components/shared/Profile";
 import SearchField from "@/components/shared/SearchField";
-import { categories } from "@/components/shared/listsOFArray";
+import { categories } from "@/components/shared/listsOfArray";
 import { useRouter } from "next/navigation";
 
 const Navbar = () => {

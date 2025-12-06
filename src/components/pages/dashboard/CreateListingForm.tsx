@@ -16,7 +16,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Loader2 } from "lucide-react";
-import { categories, locations } from "@/components/shared/listsOFArray";
+import { categories, locations } from "@/components/shared/listsOfArray";
 import { createListing } from "@/services/listingService";
 
 export default function CreateListingForm() {

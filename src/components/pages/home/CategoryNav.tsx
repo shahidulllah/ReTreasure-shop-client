@@ -1,6 +1,6 @@
 "use client";
 
-import { categories } from "@/components/shared/listsOFArray";
+import { categories } from "@/components/shared/listsOfArray";
 import { ArrowRight, SlidersHorizontal } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";

@@ -5,6 +5,7 @@ import { useState } from "react";
 
 export default function ImageUploader() {
   const [imageUrl, setImageUrl] = useState("");
+  console.log("imageUrl:", imageUrl);
 
   const handleUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];

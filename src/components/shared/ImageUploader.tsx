@@ -13,6 +13,7 @@ export default function ImageUploader() {
 
     const formData = new FormData();
     formData.append("file", file);
+    console.log("formData:", formData);
 
     const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/upload`, {
       method: "POST",

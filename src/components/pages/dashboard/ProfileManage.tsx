@@ -6,6 +6,7 @@ import { signOut, useSession } from "next-auth/react";
 import { IUser } from "@/types";
 import { updateProfile } from "@/services/userService";
 import { toast } from "sonner";
+import ImageUploader from "@/components/shared/ImageUploader";
 
 const ProfileManagement = () => {
   const { data: session, update } = useSession();
@@ -118,15 +119,16 @@ const ProfileManagement = () => {
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
-              Profile Image URL
+              Profile Image
             </label>
-            <input
+            {/* <input
               type="text"
               name="image"
               value={updatedUser.image || ""}
               onChange={handleChange}
               className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
-            />
+            /> */}
+            <ImageUploader/>
           </div>
           <div className="flex justify-end space-x-4">
             <button
